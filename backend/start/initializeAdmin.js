@@ -8,8 +8,6 @@ const initializeRoles = async () => {
       if (!existingRole) {
         await Role.create({ name: role });
         console.log(`Role '${role}' created.`);
-      } else {
-        console.log(`Role '${role}' already exists.`);
       }
     }
   } catch (error) {

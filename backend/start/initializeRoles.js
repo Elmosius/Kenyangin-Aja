@@ -19,8 +19,6 @@ const initializeAdmin = async () => {
         role: adminRole._id,
       });
       console.log("Admin account created with email: admin@gmail.com");
-    } else {
-      console.log("Admin account already exists.");
     }
   } catch (error) {
     console.error("Error initializing admin:", error.message);
