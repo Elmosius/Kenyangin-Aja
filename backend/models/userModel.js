@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-// buat schema user
+// Buat schema user
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -18,16 +18,16 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// hash paswword
-userSchema.pre("save", async (next) => {
+// Hash password sebelum menyimpan
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-// validasi password
-userSchema.methods.matchPassword = async (input) => {
+// Validasi password
+userSchema.methods.matchPassword = async function (input) {
   return await bcrypt.compare(input, this.password);
 };
 
