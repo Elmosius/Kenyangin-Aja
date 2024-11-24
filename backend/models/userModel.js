@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema(
       ref: "Role",
       default: null,
     },
+    favorites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Food",
+      },
+    ],
   },
   {
     timestamps: true,
