@@ -8,6 +8,6 @@ const router = express.Router();
 router.get("/", getRoles);
 router.get("/:id", getRoleById);
 router.post("/", validateRole, handleValidation, createRole);
-router.put("/:id", validateRole, handleValidation, updateRole);
+router.put("/:id", updateRole);
 router.delete("/:id", deleteRole);
 export default router;

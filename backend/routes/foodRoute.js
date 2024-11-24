@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", getFoods);
 router.get("/:id", getFoodDetail);
 router.post("/", validateFood, handleValidation, addFood);
-router.put("/:id", validateFood, handleValidation, updateFood);
+router.put("/:id", updateFood);
 router.delete("/:id", deleteFood);
 
 export default router;

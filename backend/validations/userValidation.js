@@ -7,4 +7,5 @@ const validateUser = [
   body("role").notEmpty().withMessage("Role is required"),
 ];
 
+
 export { validateUser };
