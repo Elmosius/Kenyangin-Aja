@@ -5,6 +5,7 @@ import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
 import roleRoute from "./routes/roleRoute.js";
 import foodRoute from "./routes/foodRoute.js";
+import favRoute from "./routes/favoriteRoute.js";
 import initializeAdmin from "./start/initializeAdmin.js";
 import initializeRoles from "./start/initializeRoles.js";
 
@@ -19,6 +20,7 @@ app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/roles", roleRoute);
 app.use("/foods", foodRoute);
+app.use("/favorite", favRoute);
 
 const PORT = process.env.PORT || 5000;
 
