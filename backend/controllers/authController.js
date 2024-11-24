@@ -1,3 +1,4 @@
+import Role from "../models/roleModel.js";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
@@ -32,6 +33,11 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
+  const role = await Role.findOne({ name: "user" });
+  if (!role) {
+    throw new Error("User role not found. Please initialize roles first.");
+  }
+
   const { name, email, password } = req.body;
 
   try {
@@ -46,6 +52,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password,
+      role: role._id,
     });
 
     // jwt token
@@ -63,6 +70,7 @@ const registerUser = async (req, res) => {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
+        role: role.name,
       },
       token,
     });

@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getUsers = async (req, res) => {
   try {
     const users = await User.find().populate("role", "name");
     res.status(200).json(users);
@@ -65,4 +65,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { createUser, getAllUsers, getUserById, updateUser, deleteUser };
+export { createUser, getUsers, getUserById, updateUser, deleteUser };
