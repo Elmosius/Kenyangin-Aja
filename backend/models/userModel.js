@@ -2,26 +2,31 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 // Buat schema user
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Name is required"],
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: [true, "Email is required"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
+      default: null,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: [true, "Email is required"],
-  },
-  password: {
-    type: String,
-    required: [true, "Password is required"],
-  },
-  role: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Role",
-    default: null,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Hash password sebelum menyimpan
 userSchema.pre("save", async function (next) {
