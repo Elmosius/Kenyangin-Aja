@@ -1,4 +1,5 @@
 import Food from "../models/foodModel.js";
+import TikTok from "../models/tiktokModel.js";
 
 const getFoods = async (req, res) => {
   try {
@@ -24,19 +25,35 @@ const getFoodDetail = async (req, res) => {
   }
 };
 
-export { getFoodDetail };
-
 const addFood = async (req, res) => {
-  const { name, description, locations, imageUrl, rating } = req.body;
+  const { name, description, locations, imageUrl, tiktokRef } = req.body;
 
   try {
-    const newFood = await Food.create({
-      name,
-      description,
-      locations,
-      imageUrl,
-      rating,
-    });
+    let newFood;
+
+    if (tiktokRef) {
+      const tiktokData = await TikTok.findOne({ id: tiktokRef });
+      if (!tiktokData) {
+        return res.status(404).json({ message: "TikTok video not found" });
+      }
+
+      const existingFood = await Food.findOne({ tiktokRef: tiktokRef });
+      if (existingFood) {
+        return res.status(400).json({ message: "This TikTok video is already linked to a food item" });
+      }
+
+      const { like_count, share_count, play_count } = tiktokData;
+      const calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
+
+      newFood = await Food.create({
+        name: name,
+        description: description,
+        imageUrl: imageUrl,
+        rating: calculatedRating,
+        locations: locations || [],
+        tiktokRef: tiktokRef,
+      });
+    }
 
     res.status(201).json({
       message: "Food added successfully",
@@ -49,17 +66,35 @@ const addFood = async (req, res) => {
 
 const updateFood = async (req, res) => {
   const { id } = req.params;
-  const { locations } = req.body;
+  const { name, description, locations, imageUrl, rating, tiktokId } = req.body;
 
   try {
-    const updatedFood = await Food.findByIdAndUpdate(
-      id,
-      { locations },
-      {
-        new: true,
-        runValidators: true,
+    let updatedFood;
+
+    if (tiktokId) {
+      const tiktokData = await TikTok.findById(tiktokId);
+      if (!tiktokData) {
+        return res.status(404).json({ message: "TikTok video not found" });
       }
-    );
+
+      const { like_count, share_count, play_count } = tiktokData;
+      const calculatedRating = Math.min(5, (like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000);
+
+      updatedFood = await Food.findByIdAndUpdate(
+        id,
+        {
+          name: name,
+          description: description,
+          imageUrl: imageUrl,
+          rating: calculatedRating,
+          locations: locations || [],
+          tiktokRef: tiktokId,
+        },
+        { new: true, runValidators: true }
+      );
+    } else {
+      updatedFood = await Food.findByIdAndUpdate(id, { name, description, locations, imageUrl, rating }, { new: true, runValidators: true });
+    }
 
     if (!updatedFood) {
       return res.status(404).json({ message: "Food not found" });
@@ -92,4 +127,4 @@ const deleteFood = async (req, res) => {
   }
 };
 
-export { addFood, getFoods, updateFood, deleteFood };
+export { addFood, getFoods, getFoodDetail, updateFood, deleteFood };

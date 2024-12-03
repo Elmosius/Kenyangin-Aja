@@ -27,6 +27,11 @@ const foodSchema = new mongoose.Schema(
       min: 0,
       max: 5,
     },
+    tiktokRef: {
+      type: String,
+      ref: "TikTok",
+      default: null,
+    },
   },
   {
     timestamps: true,
