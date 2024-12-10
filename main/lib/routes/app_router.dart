@@ -9,22 +9,24 @@ import 'package:main/features/auth/views/register_page.dart';
 final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
-      path: '/',
+      path: '/login',
+      name: 'login',
       builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
       path: '/register',
+      name: 'register',
       builder: (context, state) => const RegisterPage(),
     ),
     GoRoute(
-      path: '/dashboard',
+      path: '/',
       name: 'dashboard',
       builder: (context, state) => const DashboardLayout(
         child: Center(child: Text('Welcome to Admin Dashboard!')),
       ),
       routes: [
         GoRoute(
-          path: 'foods',
+          path: 'list_food',
           name: 'list_food',
           builder: (context, state) => const DashboardLayout(
             child: FoodListPage(),
@@ -40,4 +42,7 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
   ],
+  debugLogDiagnostics: true,
+  initialLocation: '/login',
+  routerNeglect: true,
 );

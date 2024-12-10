@@ -1,21 +1,24 @@
+import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dio/dio.dart';
+import 'package:main/data/services/api_client.dart';
 
 final authProvider = Provider((ref) => AuthProvider());
 
 class AuthProvider {
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'https://your-backend-api.com'));
+  final ApiClient _apiClient = ApiClient();
 
   Future<bool> login({required String email, required String password}) async {
-    final response = await _dio.post('/login', data: {
-      'email': email,
-      'password': password,
-    });
-
-    if (response.statusCode == 200) {
+    log('Login attempt: $email, $password');
+    try {
+      final response = await _apiClient.post('/auth/login', {
+        'email': email,
+        'password': password,
+      });
+      // Simpan token atau lakukan sesuatu
+      log('Login successful: ${response.data}');
       return true;
-    } else {
-      throw Exception(response.data['message']);
+    } catch (e) {
+      throw Exception('Login failed: $e');
     }
   }
 
@@ -24,16 +27,16 @@ class AuthProvider {
     required String email,
     required String password,
   }) async {
-    final response = await _dio.post('/register', data: {
-      'name': name,
-      'email': email,
-      'password': password,
-    });
-
-    if (response.statusCode == 201) {
+    try {
+      final response = await _apiClient.post('/auth/register', {
+        'name': name,
+        'email': email,
+        'password': password,
+      });
+      log('Register successful: ${response.data}');
       return true;
-    } else {
-      throw Exception(response.data['message']);
+    } catch (e) {
+      throw Exception('Registration failed: $e');
     }
   }
 }

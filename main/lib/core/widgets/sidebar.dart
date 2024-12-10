@@ -10,7 +10,7 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 250,
-      color: Colors.white70,
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +45,7 @@ class Sidebar extends StatelessWidget {
           SidebarItem(
             icon: Icons.logout,
             title: 'Logout',
-            onTap: () => context.replace('/'),
+            onTap: () => context.goNamed('login'),
           ),
         ],
       ),
