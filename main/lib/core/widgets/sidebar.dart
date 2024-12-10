@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/features/auth/providers/auth_state_notifier.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class Sidebar extends StatelessWidget {
+class Sidebar extends ConsumerWidget {
   const Sidebar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authNotifier = ref.read(authStateNotifierProvider.notifier);
+
     return Container(
       width: 250,
       color: Colors.white,
@@ -45,7 +49,11 @@ class Sidebar extends StatelessWidget {
           SidebarItem(
             icon: Icons.logout,
             title: 'Logout',
-            onTap: () => context.goNamed('login'),
+            onTap: () async {
+              await authNotifier.logout();
+              if (!context.mounted) return;
+              context.go('/login');
+            },
           ),
         ],
       ),

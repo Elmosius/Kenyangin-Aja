@@ -63,7 +63,7 @@ class AuthStateNotifier extends StateNotifier<bool> {
   /// Fungsi logout
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token'); // Hapus token
-    state = false; // Ubah state login menjadi false
+    await prefs.remove('token');
+    state = false;
   }
 }
