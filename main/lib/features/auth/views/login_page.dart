@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:main/features/auth/providers/auth_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -29,7 +30,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login successful')),
         );
-        Navigator.pushNamed(context, '/dashboard');
+        context.goNamed('dashboard');
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
