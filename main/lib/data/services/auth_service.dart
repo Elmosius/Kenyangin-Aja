@@ -1,28 +1,24 @@
-import 'dart:developer';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/data/services/api_client.dart';
 
-final authProvider = Provider((ref) => AuthProvider());
+class AuthService {
+  final ApiClient _apiClient;
 
-class AuthProvider {
-  final ApiClient _apiClient = ApiClient();
+  AuthService(this._apiClient);
 
-  Future<bool> login({required String email, required String password}) async {
-    log('Login attempt: $email, $password');
+  Future<String> login(
+      {required String email, required String password}) async {
     try {
       final response = await _apiClient.post('/auth/login', {
         'email': email,
         'password': password,
       });
-      // Simpan token atau lakukan sesuatu
-      log('Login successful: ${response.data}');
-      return true;
+      return response.data['token'];
     } catch (e) {
       throw Exception('Login failed: $e');
     }
   }
 
-  Future<bool> register({
+  Future<String> register({
     required String name,
     required String email,
     required String password,
@@ -33,8 +29,7 @@ class AuthProvider {
         'email': email,
         'password': password,
       });
-      log('Register successful: ${response.data}');
-      return true;
+      return response.data['token'];
     } catch (e) {
       throw Exception('Registration failed: $e');
     }
