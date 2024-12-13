@@ -7,7 +7,7 @@ class ApiClient {
       : _dio = Dio(
           BaseOptions(
             baseUrl:
-                'http://localhost:5000', // Ganti dengan base URL backend Anda
+                'http://172.16.173.84:5000', // Ganti dengan base URL backend Anda
             connectTimeout: const Duration(milliseconds: 5000),
             receiveTimeout: const Duration(milliseconds: 5000),
             headers: {
@@ -28,6 +28,24 @@ class ApiClient {
   Future<Response> get(String path) async {
     try {
       final response = await _dio.get(path);
+      return response;
+    } on DioException catch (e) {
+      throw e.response?.data['message'] ?? 'Request failed';
+    }
+  }
+
+  Future<Response> delete(String path) async {
+    try {
+      final response = await _dio.delete(path);
+      return response;
+    } on DioException catch (e) {
+      throw e.response?.data['message'] ?? 'Request failed';
+    }
+  }
+
+  Future<Response> put(String path, Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.put(path, data: data);
       return response;
     } on DioException catch (e) {
       throw e.response?.data['message'] ?? 'Request failed';

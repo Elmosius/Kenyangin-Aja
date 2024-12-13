@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main/data/services/api_client_provider.dart';
+import 'package:main/data/providers/api_client_provider.dart';
 import 'package:main/data/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
