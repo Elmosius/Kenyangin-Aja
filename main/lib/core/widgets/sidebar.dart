@@ -11,9 +11,12 @@ class Sidebar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.read(authStateNotifierProvider.notifier);
+    final mediaQuery = MediaQuery.of(context);
+
+    final double sidebarWidth = mediaQuery.size.width > 600 ? 250 : 200;
 
     return Container(
-      width: 250,
+      width: sidebarWidth,
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
