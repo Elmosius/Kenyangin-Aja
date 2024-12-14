@@ -76,12 +76,14 @@ class FoodDetailPage extends ConsumerWidget {
                   const Divider(thickness: 1),
                   const Text(
                     'TikTok Reference:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   tiktokDetailAsync != null
                       ? tiktokDetailAsync.when(
                           data: (tiktok) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              const SizedBox(height: 8),
                               Text('Description: ${tiktok.description}'),
                               Text('Likes: ${tiktok.likeCount}'),
                               Text('Comments: ${tiktok.commentCount}'),
@@ -121,7 +123,8 @@ class FoodDetailPage extends ConsumerWidget {
                               Text('Failed to load TikTok data: $error'),
                         )
                       : const Center(child: CircularProgressIndicator()),
-                ],
+                ] else
+                  const Text('No TikTok reference available'),
               ],
             ),
           );

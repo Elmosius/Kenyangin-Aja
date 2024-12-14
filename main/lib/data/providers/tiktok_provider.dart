@@ -9,5 +9,5 @@ final tiktokServiceProvider =
 final tiktokDetailProvider =
     FutureProvider.family<TikTok, String>((ref, id) async {
   final tiktokService = ref.read(tiktokServiceProvider);
-  return tiktokService.fetchTikTokDetail(id);
+  return tiktokService.fetchVideoById(id);
 });
