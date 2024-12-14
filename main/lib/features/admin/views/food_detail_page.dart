@@ -1,83 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:main/data/models/food.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:main/data/providers/food_provider.dart';
 
-class FoodDetailPage extends StatelessWidget {
-  final Food food;
+class FoodDetailPage extends ConsumerWidget {
+  final String foodId;
 
-  const FoodDetailPage({super.key, required this.food});
+  const FoodDetailPage({super.key, required this.foodId});
 
   @override
-  Widget build(BuildContext context) {
-    final location = food.locations.isNotEmpty ? food.locations.first : null;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final foodAsync = ref.watch(foodDetailProvider(foodId));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(food.name),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (food.imageUrl.isNotEmpty)
-              Center(
-                child: Image.network(
-                  food.imageUrl,
-                  width: double.infinity,
-                  height: 200,
-                  fit: BoxFit.cover,
+      appBar: AppBar(title: const Text('Food Detail')),
+      body: foodAsync.when(
+        data: (food) => Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (food.imageUrl.isNotEmpty)
+                Center(
+                  child: Image.network(
+                    food.imageUrl,
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-            const SizedBox(height: 16),
-            Text(
-              'Name:',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Text(
-              food.name,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Description:',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Text(
-              food.description,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            if (location != null) ...[
-              Text(
-                'City:',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(
-                location.city,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
               const SizedBox(height: 16),
               Text(
-                'Address:',
+                'Name: ${food.name}',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
+              const SizedBox(height: 8),
               Text(
-                location.address,
+                'Description: ${food.description}',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              const SizedBox(height: 16),
-              if (location.url != null)
+              const SizedBox(height: 8),
+              if (food.locations.isNotEmpty) ...[
                 Text(
-                  'Google Map:',
+                  'Location:',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-              if (location.url != null)
+                ...food.locations.map(
+                  (location) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '- City: ${location.city}',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        '- Address: ${location.address}',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+              const SizedBox(height: 8),
+              Text(
+                'Rating: ${food.rating.toStringAsFixed(1)}',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 8),
+              if (food.tiktokRef != null)
                 GestureDetector(
                   onTap: () {
-                    // Buka URL Google Map
+                    // Buka TikTok Ref
                   },
                   child: Text(
-                    location.url!,
+                    'TikTok Ref: ${food.tiktokRef}',
                     style: const TextStyle(
                       color: Colors.blue,
                       decoration: TextDecoration.underline,
@@ -85,35 +80,11 @@ class FoodDetailPage extends StatelessWidget {
                   ),
                 ),
             ],
-            const SizedBox(height: 16),
-            Text(
-              'Rating:',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Text(
-              food.rating.toStringAsFixed(1),
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            if (food.tiktokRef != null)
-              Text(
-                'TikTok Reference:',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            if (food.tiktokRef != null)
-              GestureDetector(
-                onTap: () {
-                  // Buka TikTok Video
-                },
-                child: Text(
-                  food.tiktokRef!,
-                  style: const TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-          ],
+          ),
+        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(
+          child: Text('Error loading food: $error'),
         ),
       ),
     );

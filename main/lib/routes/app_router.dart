@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:main/data/models/food.dart';
@@ -51,11 +53,11 @@ GoRouter appRouter(bool isLoggedIn) {
             ),
           ),
           GoRoute(
-            path: 'food_detail',
+            path: 'food_detail/:id',
             name: 'food_detail',
             builder: (context, state) {
-              final food = state.extra as Food;
-              return FoodDetailPage(food: food);
+              final foodId = state.pathParameters['id']!;
+              return FoodDetailPage(foodId: foodId);
             },
           ),
         ],

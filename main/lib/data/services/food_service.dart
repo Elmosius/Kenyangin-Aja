@@ -11,6 +11,11 @@ class FoodService {
     return (response.data as List).map((food) => Food.fromJson(food)).toList();
   }
 
+  Future<Food> getFoodDetail(String id) async {
+    final response = await _apiClient.get('/foods/$id');
+    return Food.fromJson(response.data);
+  }
+
   Future<void> deleteFood(String id) async {
     await _apiClient.delete('/foods/$id');
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:main/data/providers/food_provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -70,11 +71,8 @@ class FoodListPage extends ConsumerWidget {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/food_detail',
-                                    arguments: food,
-                                  );
+                                  context.goNamed('food_detail',
+                                      pathParameters: {'id': food.id});
                                 },
                               ),
                               IconButton(
@@ -119,7 +117,6 @@ class FoodListPage extends ConsumerWidget {
                                       ],
                                     ),
                                   );
-
                                   if (confirmed ?? false) {
                                     try {
                                       await ref
@@ -129,16 +126,18 @@ class FoodListPage extends ConsumerWidget {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
-                                            content: Text(
-                                                'Food deleted successfully')),
+                                          content:
+                                              Text('Food deleted successfully'),
+                                        ),
                                       );
                                     } catch (e) {
                                       if (!context.mounted) return;
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
-                                            content: Text(
-                                                'Error deleting food: $e')),
+                                          content:
+                                              Text('Error deleting food: $e'),
+                                        ),
                                       );
                                     }
                                   }
