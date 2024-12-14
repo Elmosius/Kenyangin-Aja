@@ -42,21 +42,23 @@ GoRouter appRouter(bool isLoggedIn) {
             builder: (context, state) => const DashboardLayout(
               child: FoodListPage(),
             ),
-          ),
-          GoRoute(
-            path: 'add_food',
-            name: 'add_food',
-            builder: (context, state) => const DashboardLayout(
-              child: AddFoodPage(),
-            ),
-          ),
-          GoRoute(
-            path: 'food_detail/:id',
-            name: 'food_detail',
-            builder: (context, state) {
-              final foodId = state.pathParameters['id']!;
-              return FoodDetailPage(foodId: foodId);
-            },
+            routes: [
+              GoRoute(
+                path: 'add_food',
+                name: 'add_food',
+                builder: (context, state) => const DashboardLayout(
+                  child: AddFoodPage(),
+                ),
+              ),
+              GoRoute(
+                path: 'food_detail/:id',
+                name: 'food_detail',
+                builder: (context, state) {
+                  final foodId = state.pathParameters['id']!;
+                  return FoodDetailPage(foodId: foodId);
+                },
+              ),
+            ],
           ),
         ],
       ),
