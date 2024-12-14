@@ -8,8 +8,7 @@ final foodProvider =
   return FoodNotifier(ref.read(foodServiceProvider));
 });
 
-final foodDetailProvider =
-    FutureProvider.family<Food, String>((ref, id) async {
+final foodDetailProvider = FutureProvider.family<Food, String>((ref, id) async {
   final foodService = ref.read(foodServiceProvider);
   return await foodService.getFoodDetail(id);
 });
@@ -32,8 +31,12 @@ class FoodNotifier extends StateNotifier<AsyncValue<List<Food>>> {
 
   Future<void> addFood(Food food) async {
     try {
-      await _foodService.addFood(food);
-      fetchFoods(); // Refresh list after adding
+      final foodData = food.toJson();
+      foodData.remove('_id');
+      foodData.remove('rating');
+
+      await _foodService.addFood(foodData);
+      fetchFoods();
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
@@ -51,7 +54,7 @@ class FoodNotifier extends StateNotifier<AsyncValue<List<Food>>> {
   Future<void> deleteFood(String id) async {
     try {
       await _foodService.deleteFood(id);
-      fetchFoods(); 
+      fetchFoods();
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }

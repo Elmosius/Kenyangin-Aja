@@ -43,8 +43,11 @@ const addFood = async (req, res) => {
       }
 
       const { like_count, share_count, play_count } = tiktokData;
-      const calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
+      let calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
 
+      if (calculatedRating > 5) {
+        calculatedRating = 5;
+      }
       newFood = await Food.create({
         name: name,
         description: description,

@@ -20,8 +20,8 @@ class FoodService {
     await _apiClient.delete('/foods/$id');
   }
 
-  Future<Food> addFood(Food food) async {
-    final response = await _apiClient.post('/foods', food.toJson());
+  Future<Food>addFood(Map<String, dynamic> food) async {
+    final response = await _apiClient.post('/foods', food);
     return Food.fromJson(response.data['food']);
   }
 

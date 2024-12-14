@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:main/features/admin/views/add_food_page.dart';
 import 'package:main/features/admin/views/admin_dashboard_page.dart';
+import 'package:main/features/admin/views/edit_food_page.dart';
 import 'package:main/features/admin/views/food_detail_page.dart';
 import 'package:main/features/admin/views/food_list_page.dart';
 import 'package:main/features/auth/views/login_page.dart';
@@ -49,6 +50,14 @@ GoRouter appRouter(bool isLoggedIn) {
                 builder: (context, state) => const DashboardLayout(
                   child: AddFoodPage(),
                 ),
+              ),
+              GoRoute(
+                path: 'edit_food/:id',
+                name: 'edit_food',
+                builder: (context, state) {
+                  final foodId = state.pathParameters['id']!;
+                  return EditFoodPage(foodId: foodId);
+                },
               ),
               GoRoute(
                 path: 'food_detail/:id',

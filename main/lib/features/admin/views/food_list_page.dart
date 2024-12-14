@@ -71,8 +71,10 @@ class FoodListPage extends ConsumerWidget {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  context.goNamed('food_detail',
-                                      pathParameters: {'id': food.id});
+                                  context.goNamed(
+                                    'food_detail',
+                                    pathParameters: {'id': food.id},
+                                  );
                                 },
                               ),
                               IconButton(
@@ -82,10 +84,9 @@ class FoodListPage extends ConsumerWidget {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/add_food',
-                                    arguments: food,
+                                  context.goNamed(
+                                    'edit_food',
+                                    pathParameters: {'id': food.id},
                                   );
                                 },
                               ),

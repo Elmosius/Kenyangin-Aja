@@ -9,6 +9,14 @@ class Location {
     this.url,
   });
 
+  Location copyWith({String? city, String? address, String? url}) {
+    return Location(
+      city: city ?? this.city,
+      address: address ?? this.address,
+      url: url,
+    );
+  }
+
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       city: json['city'],
