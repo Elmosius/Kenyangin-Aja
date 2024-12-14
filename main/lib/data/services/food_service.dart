@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:main/data/models/food.dart';
 import 'package:main/data/services/api_client.dart';
 

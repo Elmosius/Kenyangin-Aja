@@ -5,7 +5,7 @@ import 'package:main/data/services/food_service.dart';
 
 final foodProvider =
     StateNotifierProvider<FoodNotifier, AsyncValue<List<Food>>>((ref) {
-  return FoodNotifier(ref.read(foodServiceProvider));
+  return FoodNotifier(ref, ref.read(foodServiceProvider));
 });
 
 final foodDetailProvider = FutureProvider.family<Food, String>((ref, id) async {
@@ -14,9 +14,11 @@ final foodDetailProvider = FutureProvider.family<Food, String>((ref, id) async {
 });
 
 class FoodNotifier extends StateNotifier<AsyncValue<List<Food>>> {
+  final Ref ref;
   final FoodService _foodService;
 
-  FoodNotifier(this._foodService) : super(const AsyncValue.loading()) {
+  FoodNotifier(this.ref, this._foodService)
+      : super(const AsyncValue.loading()) {
     fetchFoods();
   }
 
@@ -32,11 +34,13 @@ class FoodNotifier extends StateNotifier<AsyncValue<List<Food>>> {
   Future<void> addFood(Food food) async {
     try {
       final foodData = food.toJson();
-      foodData.remove('_id');
+      foodData.remove('_id'); 
       foodData.remove('rating');
 
-      await _foodService.addFood(foodData);
-      fetchFoods();
+      final newFood = await _foodService.addFood(foodData);
+
+      final currentFoods = state.value ?? [];
+      state = AsyncValue.data([...currentFoods, newFood]);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
@@ -44,8 +48,14 @@ class FoodNotifier extends StateNotifier<AsyncValue<List<Food>>> {
 
   Future<void> updateFood(String id, Food food) async {
     try {
-      await _foodService.updateFood(id, food);
-      fetchFoods();
+      final updatedFood = await _foodService.updateFood(id, food);
+
+      final currentFoods = state.value ?? [];
+      state = AsyncValue.data(
+        currentFoods.map((f) => f.id == id ? updatedFood : f).toList(),
+      );
+
+      ref.invalidate(foodDetailProvider(id));
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
@@ -54,9 +64,11 @@ class FoodNotifier extends StateNotifier<AsyncValue<List<Food>>> {
   Future<void> deleteFood(String id) async {
     try {
       await _foodService.deleteFood(id);
-      fetchFoods();
-    } catch (e) {
-      state = AsyncValue.error(e, StackTrace.current);
+
+      final currentFoods = state.value ?? [];
+      state = AsyncValue.data(currentFoods.where((f) => f.id != id).toList());
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
     }
   }
 }
