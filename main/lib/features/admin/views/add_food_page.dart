@@ -82,6 +82,8 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                     );
 
                     await ref.read(foodProvider.notifier).addFood(food);
+                    if (!context.mounted) return;
+                    Navigator.of(context).pop();
                   },
                 ),
               ],

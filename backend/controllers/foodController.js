@@ -68,47 +68,53 @@ const addFood = async (req, res) => {
 
 const updateFood = async (req, res) => {
   const { id } = req.params;
-  const { name, description, locations, imageUrl, rating, tiktokRef } = req.body;
+  const { name, description, locations, imageUrl, tiktokRef } = req.body;
 
   try {
-    let updatedFood;
+    // Ambil data food lama
+    const existingFood = await Food.findById(id);
+    if (!existingFood) {
+      return res.status(404).json({ message: "Food not found" });
+    }
 
-    if (tiktokRef) {
+    // Jika TikTok Ref tidak diubah, gunakan nilai lama
+    const finalTikTokRef = tiktokRef || existingFood.tiktokRef;
+
+    // Jika TikTok Ref diubah, validasi
+    if (tiktokRef && tiktokRef !== existingFood.tiktokRef) {
       const tiktokData = await TikTok.findOne({ id: tiktokRef });
       if (!tiktokData) {
         return res.status(404).json({ message: "TikTok video not found" });
       }
 
-      const existingFood = await Food.findOne({ tiktokRef: tiktokRef });
-      if (existingFood) {
-        return res.status(400).json({ message: "This TikTok video is already linked to a food item" });
+      const existingFoodWithSameRef = await Food.findOne({ tiktokRef });
+      if (existingFoodWithSameRef) {
+        return res.status(400).json({ message: "This TikTok video is already linked to another food item" });
       }
+    }
 
+    // Hitung ulang rating jika TikTok Ref berubah
+    let calculatedRating = existingFood.rating;
+    if (tiktokRef && tiktokRef !== existingFood.tiktokRef) {
+      const tiktokData = await TikTok.findOne({ id: tiktokRef });
       const { like_count, share_count, play_count } = tiktokData;
-      let calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
-      if (calculatedRating > 5) {
-        calculatedRating = 5;
-      }
-
-      updatedFood = await Food.findByIdAndUpdate(
-        id,
-        {
-          name,
-          description,
-          locations: locations || [],
-          imageUrl,
-          rating: calculatedRating,
-          tiktokRef,
-        },
-        { new: true, runValidators: true }
-      );
-    } else {
-      updatedFood = await Food.findByIdAndUpdate(id, { name, description, locations, imageUrl, rating }, { new: true, runValidators: true });
+      calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
+      if (calculatedRating > 5) calculatedRating = 5;
     }
 
-    if (!updatedFood) {
-      return res.status(404).json({ message: "Food not found" });
-    }
+    // Update food
+    const updatedFood = await Food.findByIdAndUpdate(
+      id,
+      {
+        name,
+        description,
+        locations: locations || existingFood.locations,
+        imageUrl,
+        rating: calculatedRating,
+        tiktokRef: finalTikTokRef,
+      },
+      { new: true, runValidators: true }
+    );
 
     res.status(200).json({
       message: "Food updated successfully",
