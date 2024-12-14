@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/data/providers/food_provider.dart';
@@ -28,11 +30,42 @@ class FoodDetailPage extends ConsumerWidget {
               children: [
                 if (food.imageUrl.isNotEmpty)
                   Center(
-                    child: Image.network(
-                      food.imageUrl,
-                      width: double.infinity,
+                    child: SizedBox(
+                      width: 200,
                       height: 200,
-                      fit: BoxFit.cover,
+                      child: Image.network(
+                        food.imageUrl,
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        (loadingProgress.expectedTotalBytes ??
+                                            1)
+                                    : null,
+                              ),
+                            );
+                          }
+                        },
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return const Center(
+                            child: Icon(
+                              Icons.error,
+                              color: Colors.red,
+                              size: 50,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 const SizedBox(height: 16),
