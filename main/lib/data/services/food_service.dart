@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:main/data/models/food.dart';
 import 'package:main/data/services/api_client.dart';
 
@@ -20,7 +22,7 @@ class FoodService {
     await _apiClient.delete('/foods/$id');
   }
 
-  Future<Food>addFood(Map<String, dynamic> food) async {
+  Future<Food> addFood(Map<String, dynamic> food) async {
     final response = await _apiClient.post('/foods', food);
     return Food.fromJson(response.data['food']);
   }

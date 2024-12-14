@@ -44,7 +44,6 @@ const addFood = async (req, res) => {
 
       const { like_count, share_count, play_count } = tiktokData;
       let calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
-
       if (calculatedRating > 5) {
         calculatedRating = 5;
       }
@@ -69,29 +68,37 @@ const addFood = async (req, res) => {
 
 const updateFood = async (req, res) => {
   const { id } = req.params;
-  const { name, description, locations, imageUrl, rating, tiktokId } = req.body;
+  const { name, description, locations, imageUrl, rating, tiktokRef } = req.body;
 
   try {
     let updatedFood;
 
-    if (tiktokId) {
-      const tiktokData = await TikTok.findById(tiktokId);
+    if (tiktokRef) {
+      const tiktokData = await TikTok.findOne({ id: tiktokRef });
       if (!tiktokData) {
         return res.status(404).json({ message: "TikTok video not found" });
       }
 
+      const existingFood = await Food.findOne({ tiktokRef: tiktokRef });
+      if (existingFood) {
+        return res.status(400).json({ message: "This TikTok video is already linked to a food item" });
+      }
+
       const { like_count, share_count, play_count } = tiktokData;
-      const calculatedRating = Math.min(5, (like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000);
+      let calculatedRating = ((like_count * 0.5 + share_count * 0.3 + play_count * 0.2) / 100000).toFixed(1);
+      if (calculatedRating > 5) {
+        calculatedRating = 5;
+      }
 
       updatedFood = await Food.findByIdAndUpdate(
         id,
         {
-          name: name,
-          description: description,
-          imageUrl: imageUrl,
-          rating: calculatedRating,
+          name,
+          description,
           locations: locations || [],
-          tiktokRef: tiktokId,
+          imageUrl,
+          rating: calculatedRating,
+          tiktokRef,
         },
         { new: true, runValidators: true }
       );

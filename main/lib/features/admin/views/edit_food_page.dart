@@ -84,7 +84,6 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
       appBar: AppBar(title: const Text('Edit Food')),
       body: foodAsync.when(
         data: (food) {
-          // Load data if not yet loaded
           if (_nameController.text.isEmpty) {
             _loadFoodData(food);
           }
