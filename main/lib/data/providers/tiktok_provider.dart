@@ -7,7 +7,7 @@ final tiktokServiceProvider =
     Provider((ref) => TikTokService(ref.read(apiClientProvider)));
 
 final tiktokDetailProvider =
-    FutureProvider.family<TikTok, String>((ref, tiktokId) async {
+    FutureProvider.family<TikTok, String>((ref, id) async {
   final tiktokService = ref.read(tiktokServiceProvider);
-  return tiktokService.fetchTikTokDetail(tiktokId);
+  return tiktokService.fetchTikTokDetail(id);
 });

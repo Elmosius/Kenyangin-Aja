@@ -6,8 +6,8 @@ class TikTokService {
 
   TikTokService(this._apiClient);
 
-  Future<TikTok> fetchTikTokDetail(String tiktokId) async {
-    final response = await _apiClient.get('api/tiktok/$tiktokId');
+  Future<TikTok> fetchTikTokDetail(String id) async {
+    final response = await _apiClient.get('/api/tiktok/$id');
     return TikTok.fromJson(response.data);
   }
 }

@@ -1,3 +1,4 @@
+import TikTok from "../models/tiktokModel.js";
 import { searchVideos } from "../services/tiktokService.js";
 
 const getSearchVideos = async (req, res) => {
@@ -11,4 +12,43 @@ const getSearchVideos = async (req, res) => {
   }
 };
 
-export { getSearchVideos };
+const getAllTikTokVideos = async (req, res) => {
+  try {
+    const videos = await TikTok.find();
+    res.status(200).json({ message: "Fetched all videos", data: videos });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+const getTikTokVideoById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const video = await TikTok.findOne({ id });
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    res.status(200).json({ message: "Video fetched successfully", data: video });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+const deleteTikTokVideo = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const video = await TikTok.findOneAndDelete({ id });
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    res.status(200).json({ message: "Video deleted successfully" });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+export { getSearchVideos, getAllTikTokVideos, getTikTokVideoById, deleteTikTokVideo };
