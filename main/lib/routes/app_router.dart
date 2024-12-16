@@ -6,20 +6,27 @@ import 'package:main/features/admin/views/admin_dashboard_page.dart';
 import 'package:main/features/admin/views/edit_food_page.dart';
 import 'package:main/features/admin/views/food_detail_page.dart';
 import 'package:main/features/admin/views/food_list_page.dart';
+import 'package:main/features/auth/views/intro_page.dart';
 import 'package:main/features/auth/views/login_page.dart';
 import 'package:main/features/auth/views/register_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    initialLocation: isLoggedIn ? '/' : '/login',
-    redirect: (context, state) {
-      final loggingIn = state.uri.path == '/login';
-      final registering = state.uri.path == '/register';
-      if (!isLoggedIn && !loggingIn && !registering) return '/login';
-      if (isLoggedIn && (loggingIn || registering)) return '/';
-      return null;
-    },
+    initialLocation: '/',
+    // initialLocation: isLoggedIn ? '/' : '/login',
+    // redirect: (context, state) {
+    //   final loggingIn = state.uri.path == '/login';
+    //   final registering = state.uri.path == '/register';
+    //   if (!isLoggedIn && !loggingIn && !registering) return '/login';
+    //   if (isLoggedIn && (loggingIn || registering)) return '/';
+    //   return null;
+    // },
     routes: [
+      GoRoute(
+        path: '/',
+        name: 'intro',
+        builder: (context, state) => const IntroPage(),
+      ),
       GoRoute(
         path: '/login',
         name: 'login',
@@ -31,7 +38,7 @@ GoRouter appRouter(bool isLoggedIn) {
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-        path: '/',
+        path: '/dashboard',
         name: 'dashboard',
         builder: (context, state) => const DashboardLayout(
           child: Center(child: Text('Welcome to Admin Dashboard!')),

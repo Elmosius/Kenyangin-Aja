@@ -93,6 +93,9 @@ class FoodDetailPage extends ConsumerWidget {
                           Text(
                             '- Address: ${location.address}',
                           ),
+                          Text(location.url!.isNotEmpty
+                              ? '- URL: ${location.url}'
+                              : '-'),
                         ],
                       ),
                     ),
