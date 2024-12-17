@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:main/core/widgets/sidebar.dart';
 
 class IntroPage extends StatelessWidget {
@@ -27,12 +28,12 @@ class IntroPage extends StatelessWidget {
             Expanded(
               flex: 2,
               child: SizedBox(
-                width: 1000,
+                width: 650,
                 height: double.infinity,
                 child: Column(
                   children: [
                     const Text(
-                      "Welcome back to Kenyangin Aja! ",
+                      "Kenyangin Aja dulu!",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -78,7 +79,7 @@ class IntroPage extends StatelessWidget {
                           Expanded(
                             child: OutlinedButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/register');
+                                context.pushNamed('register');
                               },
                               style: OutlinedButton.styleFrom(
                                 padding:
