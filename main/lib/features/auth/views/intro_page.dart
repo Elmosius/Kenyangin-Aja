@@ -35,7 +35,7 @@ class IntroPage extends StatelessWidget {
                     const Text(
                       "Kenyangin Aja dulu!",
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 28  ,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),

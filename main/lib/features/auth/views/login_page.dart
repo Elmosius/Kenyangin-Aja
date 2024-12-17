@@ -34,7 +34,7 @@ class LoginPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFEAD7D7), // Soft Pink Background
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEAD7D7), // Same as background color
+        backgroundColor: const Color(0xFFEAD7D7),
         elevation: 0, // Remove shadow
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -78,9 +78,9 @@ class LoginPage extends ConsumerWidget {
                     padding: EdgeInsets.symmetric(horizontal: 24.0),
                     child: SizedBox(
                       child: Text(
-                        'Welcome Back!',
+                        'Selamat Datang kembali!',
                         style: TextStyle(
-                          fontSize: 36,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
@@ -117,7 +117,7 @@ class LoginPage extends ConsumerWidget {
                         // Login Button
                         SizedBox(
                           width: double.infinity,
-                          height: 50,
+                          height: 35,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black87,
@@ -134,15 +134,15 @@ class LoginPage extends ConsumerWidget {
                           ),
                         ),
 
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 18),
 
                         // Forgot Password
                         GestureDetector(
                           onTap: () {
-                            // Logic untuk Forgot Password
+                            context.pushNamed('register');
                           },
                           child: const Text(
-                            'Forgot Password?',
+                            'Belum ada akun? Daftar disini',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
