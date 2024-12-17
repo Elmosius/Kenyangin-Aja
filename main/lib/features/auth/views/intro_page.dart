@@ -33,7 +33,7 @@ class IntroPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text(
-                      "Kenyangin Aja dulu!",
+                      "Kenyangin Aja dulu.",
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,

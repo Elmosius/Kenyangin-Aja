@@ -56,22 +56,19 @@ class RegisterPage extends ConsumerWidget {
                 children: [
                   // Header Image
                   SizedBox(
-                    height: 250,
+                    height: 380,
                     child: Center(
                       child: Image.asset(
                         'images/regist.png',
-                        width: 250,
                         fit: BoxFit.contain,
+                        width: 380,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-
-                  // Title
                   const Text(
                     'Daftarkan Akunmu',
                     style: TextStyle(
-                      fontSize: 36,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
