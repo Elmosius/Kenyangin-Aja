@@ -21,21 +21,21 @@ class IntroPage extends StatelessWidget {
                 child: Image.asset(
                   'images/intro.png',
                   fit: BoxFit.contain,
-                  width: 280,
+                  width: 450,
                 ),
               ),
             ),
             Expanded(
               flex: 2,
               child: SizedBox(
-                width: 650,
+                width: 700,
                 height: double.infinity,
                 child: Column(
                   children: [
                     const Text(
                       "Kenyangin Aja dulu!",
                       style: TextStyle(
-                        fontSize: 28  ,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
