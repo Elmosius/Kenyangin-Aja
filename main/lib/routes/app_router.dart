@@ -12,7 +12,7 @@ import 'package:main/features/auth/views/register_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: '/dashboard',
     // initialLocation: isLoggedIn ? '/' : '/login',
     // redirect: (context, state) {
     //   final loggingIn = state.uri.path == '/login';

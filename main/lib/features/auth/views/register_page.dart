@@ -142,7 +142,6 @@ class RegisterPage extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 18),
-
                         // Link to Login
                         GestureDetector(
                           onTap: () {
@@ -157,6 +156,7 @@ class RegisterPage extends ConsumerWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
