@@ -15,7 +15,12 @@ const addFavorite = async (req, res) => {
       await user.save();
     }
 
-    res.status(200).json({ message: "Food added to favorites", favorites: user.favorites });
+    const populatedUser = await User.findById(userId).populate("favorites");
+
+    res.status(200).json({
+      message: "Food added to favorites",
+      favorites: populatedUser.favorites,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -24,6 +29,7 @@ const addFavorite = async (req, res) => {
 const removeFavorite = async (req, res) => {
   const { userId, foodId } = req.body;
   try {
+    // Find user
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -32,10 +38,31 @@ const removeFavorite = async (req, res) => {
     user.favorites = user.favorites.filter((fav) => fav.toString() !== foodId);
     await user.save();
 
-    res.status(200).json({ message: "Food removed from favorites", favorites: user.favorites });
+    const populatedUser = await User.findById(userId).populate("favorites");
+
+    res.status(200).json({
+      message: "Food removed from favorites",
+      favorites: populatedUser.favorites,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-export { addFavorite, removeFavorite };
+const getFavorites = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId).populate("favorites");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      favorites: user.favorites,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { addFavorite, removeFavorite, getFavorites };
