@@ -1,117 +1,138 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:main/core/widgets/sidebar.dart';
+import 'package:main/core/themes/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWeb = screenWidth > 800;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFEAF3EC),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'images/intro.png',
-                  fit: BoxFit.contain,
-                  width: 450,
-                ),
-              ),
+      body: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            top: 350,
+            child: Image.asset(
+              'images/lingkaran-hijau.png',
+              fit: BoxFit.fill,
             ),
-            Expanded(
-              flex: 2,
+          ),
+
+          // Content
+          SafeArea(
+            child: Center(
               child: SizedBox(
-                width: 700,
-                height: double.infinity,
+                width: isWeb ? 700 : double.infinity,
                 child: Column(
                   children: [
-                    const Text(
-                      "Kenyangin Aja dulu.",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Text(
-                        "Tempat dimana kamu bisa menemukan berbagai macam makanan yang lagi viral nich!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black54,
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: Image.asset(
+                          'images/intro.png',
+                          fit: BoxFit.contain,
+                          width: isWeb ? 500 : 400,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                context.pushNamed('login');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black87,
-                                foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text("Login"),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: () {
-                                context.pushNamed('register');
-                              },
-                              style: OutlinedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                side: const BorderSide(color: Colors.black87),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                "SignUp",
-                                style: TextStyle(color: Colors.black87),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        padding: const EdgeInsets.all(50.0),
+                        child: Column(
+                          crossAxisAlignment: isWeb
+                              ? CrossAxisAlignment.center
+                              : CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Kenyangin aja",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.hitam,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    const Text(
-                      "Unpublish App Kenyangin Aja.",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black38,
+                            const SizedBox(height: 20),
+                            Text(
+                              "Tempat dimana kamu bisa menemukan berbagai macam makanan yang lagi viral.",
+                              textAlign:
+                                  isWeb ? TextAlign.center : TextAlign.start,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.hitam,
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      context.pushNamed('login');
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.hitam,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text("Login"),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: OutlinedButton(
+                                    onPressed: () {
+                                      context.pushNamed('register');
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      side: const BorderSide(
+                                          color: AppColors.hitam),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "SignUp",
+                                      style: TextStyle(color: AppColors.hitam),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 25),
+                            Center(
+                              child: Text(
+                                "Unpublish App",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.hitam,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -34,9 +34,9 @@ class RegisterPage extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEBEFFA),
+      backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEBEFFA),
+        backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),

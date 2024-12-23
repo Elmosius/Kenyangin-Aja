@@ -32,9 +32,9 @@ class LoginPage extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEAD7D7), // Soft Pink Background
+      backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEAD7D7),
+        backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0, // Remove shadow
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -150,6 +150,8 @@ class LoginPage extends ConsumerWidget {
                             ),
                           ),
                         ),
+
+                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
