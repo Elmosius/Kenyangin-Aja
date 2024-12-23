@@ -29,7 +29,6 @@ const addFavorite = async (req, res) => {
 const removeFavorite = async (req, res) => {
   const { userId, foodId } = req.body;
   try {
-    // Find user
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
