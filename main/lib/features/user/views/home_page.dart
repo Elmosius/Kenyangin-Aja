@@ -82,9 +82,15 @@ class HomePage extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 filled: true,
+                hoverColor: Colors.white,
                 fillColor: Colors.white,
                 prefixIcon: const Icon(Icons.search),
-                suffixIcon: const Icon(Icons.filter_alt_outlined),
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.filter_list,
+                  ),
+                  onPressed: () {},
+                ),
                 hintText: "Search menu, restaurant or etc",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -93,7 +99,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
             // Top Rating Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,20 +121,26 @@ class HomePage extends StatelessWidget {
               height: 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 4, // Jumlah item top rating
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 16),
                     child: Column(
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 35,
-                          backgroundImage: NetworkImage(
-                              "https://via.placeholder.com/150"), // Gambar contoh
+                          backgroundImage:
+                              NetworkImage("https://via.placeholder.com/150"),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          ["Bigpapa", "Apa gtu", "Misalnya", "Apalagi"][index],
+                          [
+                            "Bigpapa",
+                            "Apa gtu",
+                            "Misalnya",
+                            "Apalagi",
+                            "Coming Soon"
+                          ][index],
                           style: GoogleFonts.montserrat(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -142,7 +153,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
             // Viral Places Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,16 +178,16 @@ class HomePage extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                childAspectRatio: 3 / 2,
+                childAspectRatio: 32 / 20,
               ),
-              itemCount: 4, // Jumlah tempat viral
+              itemCount: 4,
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: NetworkImage(
-                          "https://via.placeholder.com/150"), // Gambar contoh
+                          "https://lh5.googleusercontent.com/p/AF1QipPbZ9ezlh1454OU8V49kIjOffFU0FYtMFgurFZF=s1000"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -190,10 +200,7 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              [
-                                "Starbuck Borobudur",
-                                "Baegopa Suhat"
-                              ][index % 2],
+                              ["A", "B", "C", "D"][index],
                               style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -203,7 +210,7 @@ class HomePage extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.star,
-                                    color: Colors.yellow, size: 16),
+                                    color: AppColors.orange, size: 16),
                                 const SizedBox(width: 4),
                                 Text(
                                   "4.8 ratings",
@@ -224,15 +231,6 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Liked"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
-        currentIndex: 0,
-        onTap: (index) {},
       ),
     );
   }

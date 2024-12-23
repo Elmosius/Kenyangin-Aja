@@ -9,7 +9,10 @@ import 'package:main/features/admin/views/food_list_page.dart';
 import 'package:main/features/auth/views/intro_page.dart';
 import 'package:main/features/auth/views/login_page.dart';
 import 'package:main/features/auth/views/register_page.dart';
-import 'package:main/features/home/home_page.dart';
+import 'package:main/features/user/views/home_page.dart';
+import 'package:main/features/user/views/liked_page.dart';
+import 'package:main/features/user/views/main_page.dart';
+import 'package:main/features/user/views/profile_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
@@ -41,7 +44,19 @@ GoRouter appRouter(bool isLoggedIn) {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => const MainPage(),
+        routes: [
+          GoRoute(
+            path: 'liked',
+            name: 'liked',
+            builder: (context, state) => const LikedPage(),
+          ),
+          GoRoute(
+            path: 'profile',
+            name: 'profile',
+            builder: (context, state) => const ProfilePage(),
+          ),
+        ],
       ),
       GoRoute(
         path: '/dashboard',
