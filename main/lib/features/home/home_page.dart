@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -7,42 +8,77 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Warna background halaman
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
-        elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            DropdownButton<String>(
-              value: "Bandung",
-              items: const [
-                DropdownMenuItem(value: "Bandung", child: Text("Bandung")),
-                DropdownMenuItem(value: "Jakarta", child: Text("Jakarta")),
-                DropdownMenuItem(value: "Surabaya", child: Text("Surabaya")),
-              ],
-              onChanged: (value) {},
-              style: GoogleFonts.montserrat(
-                fontSize: 16,
-                color: Colors.black87,
-              ),
-              underline: Container(),
-              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
-            ),
-            IconButton(
-              icon:
-                  const Icon(Icons.notifications_outlined, color: Colors.black),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(35),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Header
+            SizedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: const Icon(
+                      Icons.location_pin,
+                      color: AppColors.hitam,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: DropdownButton<String>(
+                      value: "Bandung",
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                          value: "Bandung",
+                          child: Text("Bandung"),
+                        ),
+                        DropdownMenuItem(
+                          value: "Jakarta",
+                          child: Text("Jakarta"),
+                        ),
+                        DropdownMenuItem(
+                          value: "Surabaya",
+                          child: Text("Surabaya"),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                      underline: Container(),
+                      icon: const Icon(Icons.keyboard_arrow_down,
+                          color: Colors.black),
+                    ),
+                  ),
+                  const Spacer(),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.notifications_outlined,
+                            color: Colors.black),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             // Search Bar
+            const SizedBox(height: 24),
             TextField(
               decoration: InputDecoration(
                 filled: true,
