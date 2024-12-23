@@ -18,7 +18,7 @@ class IntroPage extends StatelessWidget {
           Positioned.fill(
             top: 350,
             child: Image.asset(
-              'images/lingkaran-hijau.png',
+              'assets/images/lingkaran-hijau.png',
               fit: BoxFit.fill,
             ),
           ),
@@ -34,7 +34,7 @@ class IntroPage extends StatelessWidget {
                       flex: 2,
                       child: Center(
                         child: Image.asset(
-                          'images/intro.png',
+                          'assets/images/intro.png',
                           fit: BoxFit.contain,
                           width: isWeb ? 500 : 400,
                         ),

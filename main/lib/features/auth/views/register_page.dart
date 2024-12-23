@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:main/core/themes/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/data/providers/auth_state_notifier.dart';
 
 class RegisterPage extends ConsumerWidget {
@@ -12,6 +14,9 @@ class RegisterPage extends ConsumerWidget {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWeb = screenWidth > 800;
 
     Future<void> register() async {
       try {
@@ -45,126 +50,201 @@ class RegisterPage extends ConsumerWidget {
           },
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
+      body: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            top: 150,
+            child: Image.asset(
+              'images/lingkaran-orange2.png',
+              fit: BoxFit.fill,
+            ),
+          ),
+          SingleChildScrollView(
             child: SizedBox(
-              width: 650,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Header Image
-                  SizedBox(
-                    height: 380,
-                    child: Center(
-                      child: Image.asset(
-                        'images/regist.png',
-                        fit: BoxFit.contain,
-                        width: 380,
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    'Daftarkan Akunmu',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Pastikan memasukan data yang benar ya, jangan sampai salah!',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Form Fields
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              width: double.infinity,
+              height: isWeb ? 950 : 800,
+              child: Center(
+                child: SafeArea(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: isWeb ? double.infinity : 800,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Name Field
-                        TextFormField(
-                          controller: nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Name',
-                            prefixIcon: Icon(Icons.person_outline),
-                            border: UnderlineInputBorder(),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Email Field
-                        TextFormField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            labelText: 'Email Address',
-                            prefixIcon: Icon(Icons.email_outlined),
-                            border: UnderlineInputBorder(),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Password Field
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock_outline),
-                            border: UnderlineInputBorder(),
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-
-                        // Register Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 35,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black87,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        // Header Image
+                        Stack(
+                          children: [
+                            Positioned(
+                              child: Image.asset(
+                                'images/regist.png',
+                                width: 350,
+                                fit: BoxFit.contain,
                               ),
                             ),
-                            onPressed: register,
-                            child: const Text(
-                              'Register',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                          child: SizedBox(
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: isWeb
+                                      ? Alignment.center
+                                      : Alignment.centerLeft,
+                                  child: Text(
+                                    "Let's Start",
+                                    textAlign: TextAlign.start,
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 45,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.hitam,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        const SizedBox(height: 18),
-                        // Link to Login
-                        GestureDetector(
-                          onTap: () {
-                            context.pushNamed('login');
-                          },
-                          child: const Text(
-                            'Sudah ada akun? Klik di sini untuk login',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                              decoration: TextDecoration.underline,
-                            ),
+                        const SizedBox(height: 16),
+                        // Form Fields
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                          child: Column(
+                            children: [
+                              // Name Field
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: nameController,
+                                  decoration: InputDecoration(
+                                    label: Text(
+                                      'Name',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.hitam,
+                                      ),
+                                    ),
+                                    suffixIcon:
+                                        const Icon(Icons.person_outline),
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.hitam),
+                                    ),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.hitam),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+
+                              // Email Field
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: emailController,
+                                  decoration: InputDecoration(
+                                    label: Text(
+                                      'Email Address',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.hitam,
+                                      ),
+                                    ),
+                                    suffixIcon:
+                                        const Icon(Icons.email_outlined),
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.hitam),
+                                    ),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.hitam),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+
+                              // Password Field
+                              SizedBox(
+                                width: 500,
+                                child: TextFormField(
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    label: Text(
+                                      'Password',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.hitam,
+                                      ),
+                                    ),
+                                    suffixIcon: const Icon(Icons.lock_outline),
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.hitam),
+                                    ),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.hitam),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 32),
+
+                              // Register Button
+                              SizedBox(
+                                height: 45,
+                                width: 500,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.hitam,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onPressed: register,
+                                  child: const Text(
+                                    'Register',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 18),
+
+                              // Link to Login
+                              GestureDetector(
+                                onTap: () {
+                                  context.pushNamed('login');
+                                },
+                                child: Text(
+                                  'Sudah ada akun? Klik di sini untuk login',
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.hitam,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
