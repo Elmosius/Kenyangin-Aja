@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:main/core/themes/colors.dart';
 import 'package:main/data/providers/auth_state_notifier.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -11,6 +13,9 @@ class LoginPage extends ConsumerWidget {
     final authStateNotifier = ref.read(authStateNotifierProvider.notifier);
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWeb = screenWidth > 800;
 
     Future<void> login() async {
       try {
@@ -35,7 +40,7 @@ class LoginPage extends ConsumerWidget {
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
         backgroundColor: const Color(0xFFFFFFFF),
-        elevation: 0, // Remove shadow
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
@@ -43,84 +48,135 @@ class LoginPage extends ConsumerWidget {
           },
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            top: 150,
+            child: Image.asset(
+              'images/lingkaran-orange.png',
+              fit: BoxFit.fill,
+            ),
+          ),
+          SafeArea(
             child: SizedBox(
-              width: 650,
+              width: double.infinity,
+              height: isWeb ? double.infinity : 800,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: isWeb
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 300,
+                    height: 250,
                     child: Stack(
                       children: [
-                        SizedBox(
-                          child: Positioned(
-                            top: 50,
-                            left: 0,
-                            right: 0,
-                            child: Center(
-                              child: Image.asset(
-                                'images/login.png',
-                                width: 300,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
+                        Positioned(
+                          child: Image.asset(
+                            'images/login.png',
+                            width: 300,
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: SizedBox(
-                      child: Text(
-                        'Selamat Datang kembali!',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment:
+                                isWeb ? Alignment.center : Alignment.centerLeft,
+                            child: Text(
+                              'Welcome',
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.hitam,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment:
+                                isWeb ? Alignment.center : Alignment.centerLeft,
+                            child: Text(
+                              'Back!',
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.hitam,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-
                   // Form Fields
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            labelText: 'Email Address',
-                            prefixIcon: Icon(Icons.email_outlined),
-                            border: UnderlineInputBorder(),
+                        SizedBox(
+                          width: 500,
+                          child: TextFormField(
+                            controller: emailController,
+                            decoration: InputDecoration(
+                              label: Text(
+                                'Email Address',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.hitam,
+                                ),
+                              ),
+                              suffixIcon: const Icon(Icons.email_outlined),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.hitam),
+                              ),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.hitam),
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock_outline),
-                            border: UnderlineInputBorder(),
+                        SizedBox(
+                          width: 500,
+                          child: TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              label: Text(
+                                'Password',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.hitam,
+                                ),
+                              ),
+                              suffixIcon: const Icon(Icons.lock_outline),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.hitam),
+                              ),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.hitam),
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 32),
 
                         // Login Button
                         SizedBox(
-                          width: double.infinity,
-                          height: 35,
+                          height: 45,
+                          width: 500,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black87,
+                              backgroundColor: AppColors.hitam,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -128,30 +184,29 @@ class LoginPage extends ConsumerWidget {
                             onPressed: login,
                             child: const Text(
                               'Login',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
 
                         const SizedBox(height: 18),
-
                         // Forgot Password
                         GestureDetector(
                           onTap: () {
                             context.pushNamed('register');
                           },
-                          child: const Text(
+                          child: Text(
                             'Belum ada akun? Daftar disini',
-                            style: TextStyle(
+                            style: GoogleFonts.montserrat(
                               fontSize: 14,
-                              color: Colors.grey,
-                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.hitam,
                             ),
                           ),
                         ),
-
-                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
@@ -159,7 +214,7 @@ class LoginPage extends ConsumerWidget {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

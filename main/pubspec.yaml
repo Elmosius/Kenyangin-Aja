@@ -73,7 +73,8 @@ flutter:
     - assets/images/login.png
     - assets/images/regist.png
     - assets/images/lingkaran-hijau.png
-  #   - images/a_dot_ham.jpeg
+    - assets/images/lingkaran-orange.png
+    - assets/images/lingkaran-orange2.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
