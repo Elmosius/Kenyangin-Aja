@@ -9,24 +9,24 @@ import 'package:main/features/admin/views/food_list_page.dart';
 import 'package:main/features/auth/views/intro_page.dart';
 import 'package:main/features/auth/views/login_page.dart';
 import 'package:main/features/auth/views/register_page.dart';
+import 'package:main/features/home/home_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    // initialLocation: '/',
-    initialLocation: isLoggedIn ? '/dashboard' : '/',
-    redirect: (context, state) {
-      final loggingIn = state.uri.path == '/';
-      final registering = state.uri.path == '/';
-      if (!isLoggedIn && !loggingIn && !registering) return '/';
-      if (isLoggedIn && (loggingIn || registering)) return '/dashboard';
-      return null;
-    },
+    initialLocation: '/home',
+    // initialLocation: isLoggedIn ? '/dashboard' : '/',
+    // redirect: (context, state) {
+    //   final loggingIn = state.uri.path == '/';
+    //   final registering = state.uri.path == '/';
+    //   if (!isLoggedIn && !loggingIn && !registering) return '/';
+    //   if (isLoggedIn && (loggingIn || registering)) return '/dashboard';
+    //   return null;
+    // },
     routes: [
       GoRoute(
         path: '/',
         name: 'intro',
         builder: (context, state) => const IntroPage(),
-        
       ),
       GoRoute(
         path: '/login',
@@ -37,6 +37,11 @@ GoRouter appRouter(bool isLoggedIn) {
         path: '/register',
         name: 'register',
         builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/home',
+        name: 'home',
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: '/dashboard',
