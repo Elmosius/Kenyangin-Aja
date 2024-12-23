@@ -12,20 +12,21 @@ import 'package:main/features/auth/views/register_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    initialLocation: '/',
-    // initialLocation: isLoggedIn ? '/' : '/login',
-    // redirect: (context, state) {
-    //   final loggingIn = state.uri.path == '/login';
-    //   final registering = state.uri.path == '/register';
-    //   if (!isLoggedIn && !loggingIn && !registering) return '/login';
-    //   if (isLoggedIn && (loggingIn || registering)) return '/';
-    //   return null;
-    // },
+    // initialLocation: '/',
+    initialLocation: isLoggedIn ? '/dashboard' : '/',
+    redirect: (context, state) {
+      final loggingIn = state.uri.path == '/';
+      final registering = state.uri.path == '/';
+      if (!isLoggedIn && !loggingIn && !registering) return '/';
+      if (isLoggedIn && (loggingIn || registering)) return '/dashboard';
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/',
         name: 'intro',
         builder: (context, state) => const IntroPage(),
+        
       ),
       GoRoute(
         path: '/login',
