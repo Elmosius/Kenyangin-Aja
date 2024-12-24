@@ -44,19 +44,23 @@ GoRouter appRouter(bool isLoggedIn) {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (context, state) => const MainPage(),
-        routes: [
-          GoRoute(
-            path: 'liked',
-            name: 'liked',
-            builder: (context, state) => const LikedPage(),
-          ),
-          GoRoute(
-            path: 'profile',
-            name: 'profile',
-            builder: (context, state) => const ProfilePage(),
-          ),
-        ],
+        builder: (context, state) => const MainPage(
+          child: HomePage(),
+        ),
+      ),
+      GoRoute(
+        path: '/liked',
+        name: 'liked',
+        builder: (context, state) => const MainPage(
+          child: LikedPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        builder: (context, state) => const MainPage(
+          child: ProfilePage(),
+        ),
       ),
       GoRoute(
         path: '/dashboard',

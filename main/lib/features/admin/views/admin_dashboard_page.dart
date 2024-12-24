@@ -32,7 +32,7 @@ class DashboardLayout extends StatelessWidget {
           Expanded(
             child: Container(
               color: Colors.grey[100],
-              child: child, // Halaman dinamis diisi di sini
+              child: child,
             ),
           ),
         ],

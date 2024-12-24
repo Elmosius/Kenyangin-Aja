@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:main/core/themes/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:main/features/user/views/home_page.dart';
-import 'package:main/features/user/views/liked_page.dart';
-import 'package:main/features/user/views/profile_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final Widget child;
+
+  const MainPage({super.key, required this.child});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -16,30 +15,47 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    HomePage(),
-    LikedPage(),
-    ProfilePage(),
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final currentLocation =
+        GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
 
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (currentLocation.startsWith('/home')) {
+      _currentIndex = 0;
+    } else if (currentLocation.startsWith('/liked')) {
+      _currentIndex = 1;
+    } else if (currentLocation.startsWith('/profile')) {
+      _currentIndex = 2;
+    }
+  }
+
+  void _onTabSelected(int index) {
+    if (_currentIndex != index) {
+      setState(() {
+        _currentIndex = index;
+      });
+      switch (index) {
+        case 0:
+          context.goNamed('home');
+          break;
+        case 1:
+          context.goNamed('liked');
+          break;
+        case 2:
+          context.goNamed('profile');
+          break;
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: _pages,
-        ),
-      ),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: _onTabTapped,
+        onTap: _onTabSelected,
         backgroundColor: AppColors.orange,
         selectedItemColor: AppColors.hitam,
         unselectedLabelStyle: GoogleFonts.inter(
