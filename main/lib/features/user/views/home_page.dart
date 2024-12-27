@@ -14,12 +14,20 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final foodsAsync = ref.watch(foodProvider);
 
+    const int maxTopRating = 5;
+    const int maxViralPlaces = 4;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: foodsAsync.when(
         data: (foods) {
           final topRatingFoods = List<Food>.from(foods)
-            ..sort((a, b) => b.rating.compareTo(a.rating));
+            ..sort((a, b) => b.rating.compareTo(a.rating))
+            ..take(maxTopRating);
+
+          final viralPlacesFoods = List<Food>.from(foods)
+            ..sort((a, b) => (b.createdAt!).compareTo(a.createdAt!))
+            ..take(maxViralPlaces);
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(35),
@@ -152,7 +160,6 @@ class HomePage extends ConsumerWidget {
                               Text(
                                 food.name,
                                 style: GoogleFonts.montserrat(
-                                  
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -192,51 +199,59 @@ class HomePage extends ConsumerWidget {
                     mainAxisSpacing: 16,
                     childAspectRatio: 32 / 20,
                   ),
-                  itemCount: 4,
+                  itemCount: viralPlacesFoods.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        image: const DecorationImage(
-                          image: NetworkImage(
-                              "https://lh5.googleusercontent.com/p/AF1QipPbZ9ezlh1454OU8V49kIjOffFU0FYtMFgurFZF=s1000"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            bottom: 16,
-                            left: 8,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  ["A", "B", "C", "D"][index],
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star,
-                                        color: AppColors.orange, size: 16),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      "4.8 ratings",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                    final food = viralPlacesFoods.elementAt(index);
+                    return GestureDetector(
+                      onTap: () {
+                        // context.goNamed('food_detail/${food.id}');
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          image: DecorationImage(
+                            image: NetworkImage(food.imageUrl),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(0.45),
+                                BlendMode.darken),
                           ),
-                        ],
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              bottom: 16,
+                              left: 8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    food.name,
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.star,
+                                          color: AppColors.orange, size: 16),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "${food.rating.toStringAsFixed(1)} ratings",
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
