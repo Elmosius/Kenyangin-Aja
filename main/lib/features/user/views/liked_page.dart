@@ -58,10 +58,13 @@ class LikedPage extends ConsumerWidget {
             // Konten Grid
             favoritesAsync.when(
               data: (favorites) => favorites.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Text(
                         "Kamu belum menandai tempat!",
-                        style: TextStyle(fontSize: 16),
+                        style: GoogleFonts.inter(
+                          color: AppColors.hitam,
+                          fontSize: 16,
+                        ),
                       ),
                     )
                   : GridView.builder(
