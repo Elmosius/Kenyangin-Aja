@@ -8,7 +8,7 @@ class Food {
   final String imageUrl;
   final double rating;
   final String? tiktokRef;
-  
+  final DateTime? createdAt;
 
   Food({
     required this.id,
@@ -18,6 +18,7 @@ class Food {
     required this.imageUrl,
     required this.rating,
     this.tiktokRef,
+    this.createdAt,
   });
 
   factory Food.fromJson(Map<String, dynamic> json) {
@@ -31,6 +32,7 @@ class Food {
       imageUrl: json['imageUrl'] ?? '',
       rating: (json['rating'] ?? 0).toDouble(),
       tiktokRef: json['tiktokRef'],
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
@@ -43,6 +45,7 @@ class Food {
       'imageUrl': imageUrl,
       'rating': rating,
       'tiktokRef': tiktokRef,
+      'createdAt': createdAt!.toIso8601String(),
     };
   }
 }

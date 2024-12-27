@@ -79,6 +79,7 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                       imageUrl: _imageUrlController.text,
                       rating: 0.0,
                       tiktokRef: _selectedTikTokRef,
+                      createdAt: DateTime.now(),
                     );
 
                     await ref.read(foodProvider.notifier).addFood(food);
