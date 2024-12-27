@@ -8,6 +8,7 @@ class Food {
   final String imageUrl;
   final double rating;
   final String? tiktokRef;
+  
 
   Food({
     required this.id,
