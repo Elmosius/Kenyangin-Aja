@@ -5,20 +5,23 @@ class AuthService {
 
   AuthService(this._apiClient);
 
-  Future<String> login(
+  Future<Map<String, dynamic>> login(
       {required String email, required String password}) async {
     try {
       final response = await _apiClient.post('/auth/login', {
         'email': email,
         'password': password,
       });
-      return response.data['token'];
+      return {
+        'token': response.data['token'],
+        'user': response.data['user'],
+      };
     } catch (e) {
       throw Exception('Login failed: $e');
     }
   }
 
-  Future<String> register({
+  Future<Map<String, dynamic>> register({
     required String name,
     required String email,
     required String password,
@@ -29,7 +32,10 @@ class AuthService {
         'email': email,
         'password': password,
       });
-      return response.data['token'];
+      return {
+        'token': response.data['token'],
+        'user': response.data['user'],
+      };
     } catch (e) {
       throw Exception('Registration failed: $e');
     }

@@ -1,51 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:main/data/models/food.dart';
 import 'package:go_router/go_router.dart';
+import 'package:main/data/providers/auth_state_notifier.dart';
+import 'package:main/data/providers/favorite_provider.dart';
 
 class LikedPage extends ConsumerWidget {
   const LikedPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final likedFoods = ref.watch(likedFoodProvider);
+    final authState = ref.watch(authStateNotifierProvider.notifier);
+    final userId = authState.userProfile?['id'];
+
+    final favoritesAsync = ref.watch(favoriteProvider);
+
+    ref.read(favoriteProvider.notifier).fetchFavorites(userId);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tempat yang kamu tandai!',
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: const Color(0xFFF5F5F5),
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {
-              // Tambahkan aksi pencarian di sini
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
+        title: const Text('Tempat yang kamu tandai!'),
       ),
-      body: likedFoods.isEmpty
-          ? const Center(
-              child: Text(
-                "Kamu belum menandai tempat!",
-                style: TextStyle(fontSize: 16),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GridView.builder(
+      body: favoritesAsync.when(
+        data: (favorites) => favorites.isEmpty
+            ? const Center(child: Text("Kamu belum menandai tempat!"))
+            : GridView.builder(
+                itemCount: favorites.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  childAspectRatio: 3 / 4,
+                  crossAxisSpacing: 16,
                 ),
-                itemCount: likedFoods.length,
                 itemBuilder: (context, index) {
-                  final food = likedFoods[index];
+                  final food = favorites[index];
                   return GestureDetector(
                     onTap: () {
                       context.push('/food_detail', extra: food);
@@ -64,49 +50,15 @@ class LikedPage extends ConsumerWidget {
                         Positioned(
                           bottom: 16,
                           left: 8,
-                          right: 8,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                food.name,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 4,
-                                      color: Colors.black,
-                                      offset: Offset(0, 1),
-                                    ),
-                                  ],
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              Text(food.name,
+                                  style: const TextStyle(color: Colors.white)),
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.star,
-                                    color: Colors.orange,
-                                    size: 16,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    "${food.rating.toStringAsFixed(1)} ratings",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 4,
-                                          color: Colors.black,
-                                          offset: Offset(0, 1),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  const Icon(Icons.star, color: Colors.orange),
+                                  Text("${food.rating}"),
                                 ],
                               ),
                             ],
@@ -116,14 +68,11 @@ class LikedPage extends ConsumerWidget {
                           top: 8,
                           right: 8,
                           child: IconButton(
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            ),
+                            icon: const Icon(Icons.favorite, color: Colors.red),
                             onPressed: () {
                               ref
-                                  .read(likedFoodProvider.notifier)
-                                  .removeFood(food);
+                                  .read(favoriteProvider.notifier)
+                                  .removeFavorite(userId, food.id);
                             },
                           ),
                         ),
@@ -132,7 +81,9 @@ class LikedPage extends ConsumerWidget {
                   );
                 },
               ),
-            ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+      ),
     );
   }
 }

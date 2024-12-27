@@ -28,7 +28,9 @@ class LoginPage extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login successful')),
         );
-        context.goNamed('dashboard');
+
+        // mau kemana stelah login
+        context.goNamed('home');
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.toString())),

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -26,6 +27,12 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       message: "Berhasil login",
       token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role.name,
+      },
     });
   } catch (e) {
     res.status(500).json({ message: e.message });

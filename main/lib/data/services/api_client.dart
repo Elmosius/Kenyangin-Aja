@@ -34,9 +34,9 @@ class ApiClient {
     }
   }
 
-  Future<Response> delete(String path) async {
+  Future<Response> delete(String path, {Map<String, dynamic>? data}) async {
     try {
-      final response = await _dio.delete(path);
+      final response = await _dio.delete(path, data: data);
       return response;
     } on DioException catch (e) {
       throw e.response?.data['message'] ?? 'Request failed';
