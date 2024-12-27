@@ -11,13 +11,14 @@ import 'package:main/features/auth/views/register_page.dart';
 import 'package:main/features/user/views/home_page.dart';
 import 'package:main/features/user/views/liked_page.dart';
 import 'package:main/features/user/views/main_page.dart';
+import 'package:main/features/user/views/post_detail_page.dart';
 import 'package:main/features/user/views/profile_page.dart';
 import 'package:main/features/user/views/top_rating_page.dart';
 import 'package:main/features/user/views/viral_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    initialLocation: '/viral/all',
+    initialLocation: '/post-detail',
     // initialLocation: isLoggedIn ? '/dashboard' : '/',
     // redirect: (context, state) {
     //   final loggingIn = state.uri.path == '/';
@@ -61,6 +62,13 @@ GoRouter appRouter(bool isLoggedIn) {
         name: 'top-rating',
         builder: (context, state) => const MainPage(
           child: TopRatingPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/post-detail',
+        name: 'post-detail',
+        builder: (context, state) => const MainPage(
+          child: PostDetailPage(),
         ),
       ),
       GoRoute(
