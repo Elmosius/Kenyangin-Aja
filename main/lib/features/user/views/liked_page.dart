@@ -21,7 +21,7 @@ class LikedPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

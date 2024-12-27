@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:main/features/admin/views/add_food_page.dart';
@@ -13,10 +12,12 @@ import 'package:main/features/user/views/home_page.dart';
 import 'package:main/features/user/views/liked_page.dart';
 import 'package:main/features/user/views/main_page.dart';
 import 'package:main/features/user/views/profile_page.dart';
+import 'package:main/features/user/views/top_rating_page.dart';
+import 'package:main/features/user/views/viral_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/viral/all',
     // initialLocation: isLoggedIn ? '/dashboard' : '/',
     // redirect: (context, state) {
     //   final loggingIn = state.uri.path == '/';
@@ -53,6 +54,20 @@ GoRouter appRouter(bool isLoggedIn) {
         name: 'liked',
         builder: (context, state) => const MainPage(
           child: LikedPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/top-rating/all',
+        name: 'top-rating',
+        builder: (context, state) => const MainPage(
+          child: TopRatingPage(),
+        ),
+      ),
+      GoRoute(
+        path: '/viral/all',
+        name: 'viral',
+        builder: (context, state) => const MainPage(
+          child: ViralPage(),
         ),
       ),
       GoRoute(
