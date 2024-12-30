@@ -33,7 +33,7 @@ class ViralPlacesWidget extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.goNamed('viral');
+                context.pushNamed('viral');
               },
               child: const Text("See all"),
             ),
@@ -59,7 +59,7 @@ class ViralPlacesWidget extends StatelessWidget {
               imageUrl: food.imageUrl,
               rating: food.rating,
               onTap: () {
-                context.goNamed('food_detail', extra: food);
+                context.pushNamed('food_detail', extra: food);
               },
             );
           },

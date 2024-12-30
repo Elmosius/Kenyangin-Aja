@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/core/widgets/empty_status.dart';
 import 'package:main/core/widgets/header.dart';
 import 'package:main/core/widgets/search_bar.dart';
-import 'package:main/core/widgets/top_rating.dart';
-import 'package:main/core/widgets/viral_place_list.dart';
+import 'package:main/features/user/layouts/top_rating.dart';
+import 'package:main/features/user/layouts/viral_place_list.dart';
 import 'package:main/data/providers/food_provider.dart';
 import 'package:main/data/providers/city_provider.dart';
 

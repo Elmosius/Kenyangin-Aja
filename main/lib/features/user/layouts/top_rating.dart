@@ -29,7 +29,7 @@ class TopRatingWidget extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.goNamed('top-rating');
+                context.pushNamed('top-rating');
               },
               child: const Text("See all"),
             ),
@@ -47,7 +47,7 @@ class TopRatingWidget extends StatelessWidget {
               final food = topRatingFoods[index];
               return GestureDetector(
                 onTap: () {
-                  context.goNamed('food_detail', extra: food);
+                  context.pushNamed('food_detail', extra: food);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_grid.dart';
 import 'package:main/core/widgets/search_bar.dart';
 import 'package:main/core/widgets/title.dart';
@@ -26,6 +25,16 @@ class _TopRatingPageState extends State<TopRatingPage> {
 
         return Scaffold(
           backgroundColor: const Color(0xFFF5F5F5),
+          appBar: AppBar(
+            backgroundColor: const Color(0xFFF5F5F5),
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
           body: foodsAsync.when(
             data: (foods) {
               final topRatingFoods = foods
@@ -41,7 +50,7 @@ class _TopRatingPageState extends State<TopRatingPage> {
 
               return SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
