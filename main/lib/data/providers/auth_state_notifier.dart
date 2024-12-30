@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/data/providers/api_client_provider.dart';
 import 'package:main/data/services/auth_service.dart';
@@ -28,7 +30,19 @@ class AuthStateNotifier extends StateNotifier<bool> {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-    state = token != null;
+    if (token == null) {
+      state = false;
+      return;
+    }
+
+    try {
+      final user = await _authService.verifyToken(token);
+      _userProfile = user;
+      log('User Profile: $_userProfile');
+      state = true;
+    } catch (e) {
+      await logout();
+    }
   }
 
   /// Fungsi login
@@ -119,8 +133,7 @@ class AuthStateNotifier extends StateNotifier<bool> {
   /// Fungsi logout
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('userId');
+    await prefs.clear();
     _userProfile = null;
     state = false;
   }

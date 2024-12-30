@@ -72,4 +72,15 @@ class AuthService {
       throw Exception('Failed to delete user: $e');
     }
   }
+
+  Future<Map<String, dynamic>> verifyToken(String token) async {
+    try {
+      final response = await _apiClient.post('/auth/verify-token', {
+        'token': token,
+      });
+      return response.data['user'];
+    } catch (e) {
+      throw Exception('Token verification failed: $e');
+    }
+  }
 }
