@@ -7,6 +7,7 @@ import 'package:main/features/admin/views/food_detail_page.dart';
 import 'package:main/features/admin/views/food_list_page.dart';
 import 'package:main/features/auth/views/intro_page.dart';
 import 'package:main/features/auth/views/login_page.dart';
+import 'package:main/features/auth/views/not_found.dart';
 import 'package:main/features/auth/views/register_page.dart';
 import 'package:main/features/user/views/home_page.dart';
 import 'package:main/features/user/views/liked_page.dart';
@@ -16,7 +17,10 @@ import 'package:main/features/user/views/profile_page.dart';
 import 'package:main/features/user/views/top_rating_page.dart';
 import 'package:main/features/user/views/viral_page.dart';
 
-GoRouter appRouter({required bool isLoggedIn, required String userRole}) {
+GoRouter appRouter({
+  required bool isLoggedIn,
+  required String userRole,
+}) {
   return GoRouter(
     initialLocation: isLoggedIn ? '/home' : '/',
     redirect: (context, state) {
@@ -25,17 +29,15 @@ GoRouter appRouter({required bool isLoggedIn, required String userRole}) {
       final isRegistering = state.uri.toString() == '/register';
       final isIntro = state.uri.toString() == '/';
 
-      // Redirect to intro if not logged in
       if (!isLoggedIn && !isLoggingIn && !isRegistering && !isIntro) {
         return '/';
       }
 
-      // Prevent non-admin users from accessing dashboard
       if (isAccessingAdmin && userRole != 'admin') {
         return '/home';
       }
 
-      return null; // No redirection
+      return null;
     },
     routes: [
       GoRoute(
@@ -137,6 +139,7 @@ GoRouter appRouter({required bool isLoggedIn, required String userRole}) {
         ],
       ),
     ],
+    errorBuilder: (context, state) => const NotFoundPage(),
     debugLogDiagnostics: true,
   );
 }
