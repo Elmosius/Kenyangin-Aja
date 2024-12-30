@@ -9,6 +9,9 @@ class ViralPlacesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final double childAspectRatio = screenWidth < 800 ? 8 / 5 : 8 / 5;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -34,11 +37,11 @@ class ViralPlacesWidget extends StatelessWidget {
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: screenWidth < 600 ? 2 : 5,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
-            childAspectRatio: 32 / 20,
+            childAspectRatio: childAspectRatio,
           ),
           itemCount: viralPlacesFoods.length,
           itemBuilder: (context, index) {

@@ -21,7 +21,7 @@ class _TopRatingPageState extends State<TopRatingPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final double childAspectRatio = screenWidth < 800 ? 3 / 4 : 8 / 5;
+    final double childAspectRatio = screenWidth < 800 ? 3 / 3 : 8 / 5;
 
     return Consumer(
       builder: (context, ref, child) {
@@ -82,7 +82,7 @@ class _TopRatingPageState extends State<TopRatingPage> {
                             itemCount: topRatingFoods.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: screenWidth < 600 ? 2 : 3,
+                              crossAxisCount: screenWidth < 600 ? 2 : 5,
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 32,
                               childAspectRatio: childAspectRatio,
