@@ -77,7 +77,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
             // Delete Account Button
             DeleteButton(
-              onPressed: () {
+              onConfirmed: () {
                 ref
                     .read(authStateNotifierProvider.notifier)
                     .deleteAccount(userId);

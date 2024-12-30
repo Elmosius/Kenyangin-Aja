@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
 
 Future<void> showEditDialog({
   required BuildContext context,
@@ -13,6 +15,7 @@ Future<void> showEditDialog({
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: Colors.white,
         title: Text(title),
         content: TextField(
           controller: controller,
@@ -24,14 +27,18 @@ Future<void> showEditDialog({
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Batal"),
+            child: Text("Batal", style: GoogleFonts.inter(color: Colors.black)),
           ),
           ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(AppColors.orange),
+            ),
             onPressed: () {
               onConfirm(controller.text);
               Navigator.pop(context);
             },
-            child: const Text("Simpan"),
+            child:
+                Text("Simpan", style: GoogleFonts.inter(color: Colors.black)),
           ),
         ],
       );

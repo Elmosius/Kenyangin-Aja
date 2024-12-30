@@ -73,10 +73,12 @@ class _LikedPageState extends State<LikedPage> {
                         .toList();
 
                     if (filteredFavorites.isEmpty) {
-                      return const EmptyStateWidget(
-                        message:
-                            "Kamu belum menandai tempat yang cocok dengan pencarian Anda.",
-                        imagePath: 'images/status_empty.png',
+                      return const Center(
+                        child: EmptyStateWidget(
+                          message:
+                              "Kamu belum menandai tempat yang cocok dengan pencarian Anda.",
+                          imagePath: 'images/status_empty.png',
+                        ),
                       );
                     }
 

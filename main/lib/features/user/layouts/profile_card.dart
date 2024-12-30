@@ -24,7 +24,7 @@ class ProfileCardSection extends ConsumerWidget {
       onEditName: () async {
         await showEditDialog(
           context: context,
-          title: "Nama",
+          title: "Masukkan nama baru ",
           initialValue: userName,
           onConfirm: (newName) async {
             await ref
@@ -39,7 +39,7 @@ class ProfileCardSection extends ConsumerWidget {
       onEditEmail: () async {
         await showEditDialog(
           context: context,
-          title: "Email",
+          title: "Masukan email baru",
           initialValue: userEmail,
           onConfirm: (newEmail) async {
             await ref
