@@ -40,4 +40,36 @@ class AuthService {
       throw Exception('Registration failed: $e');
     }
   }
+
+  /// Fungsi Mendapatkan Profil Pengguna
+  Future<Map<String, dynamic>> getUserProfile(String userId) async {
+    try {
+      final response = await _apiClient.get('/users/$userId');
+      return response.data;
+    } catch (e) {
+      throw Exception('Failed to fetch user profile: $e');
+    }
+  }
+
+  /// Fungsi Memperbarui Profil Pengguna
+  Future<Map<String, dynamic>> updateUser({
+    required String userId,
+    required Map<String, dynamic> updates,
+  }) async {
+    try {
+      final response = await _apiClient.put('/users/$userId', updates);
+      return response.data;
+    } catch (e) {
+      throw Exception('Failed to update user: $e');
+    }
+  }
+
+  /// Fungsi Menghapus Akun Pengguna
+  Future<void> deleteUser(String userId) async {
+    try {
+      await _apiClient.delete('/users/$userId');
+    } catch (e) {
+      throw Exception('Failed to delete user: $e');
+    }
+  }
 }

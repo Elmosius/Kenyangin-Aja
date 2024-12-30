@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:main/core/themes/colors.dart';
+import 'package:intl/intl.dart';
 
 class CreationDateCard extends StatelessWidget {
   final String accountCreationDate;
@@ -9,6 +9,8 @@ class CreationDateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formattedDate = _formatDate(accountCreationDate);
+
     return SizedBox(
       width: double.infinity,
       child: Card(
@@ -19,15 +21,26 @@ class CreationDateCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            "Akun ini dibuat pada tanggal $accountCreationDate",
+            "Akun ini dibuat pada tanggal $formattedDate",
             style: GoogleFonts.inter(
               fontSize: 14,
-              color: AppColors.hitam,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
       ),
     );
+  }
+
+  // Fungsi untuk memformat tanggal
+  String _formatDate(String rawDate) {
+    try {
+      final date = DateTime.parse(rawDate);
+      final formatter = DateFormat('dd-MM-yyyy HH:mm:ss');
+      return formatter.format(date);
+    } catch (e) {
+      return "Tanggal tidak valid";
+    }
   }
 }

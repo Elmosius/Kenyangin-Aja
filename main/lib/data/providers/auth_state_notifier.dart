@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main/data/providers/api_client_provider.dart';
 import 'package:main/data/services/auth_service.dart';
@@ -29,7 +27,7 @@ class AuthStateNotifier extends StateNotifier<bool> {
   Future<void> _checkLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    
+
     state = token != null;
   }
 
@@ -40,12 +38,14 @@ class AuthStateNotifier extends StateNotifier<bool> {
       final token = result['token'];
       final user = result['user'];
 
+      final expiry = DateTime.now().add(const Duration(days: 1));
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
+      await prefs.setString('userId', user['id']);
+      await prefs.setString('expiry', expiry.toIso8601String());
 
       _userProfile = user;
-
-      log(_userProfile.toString());
       state = true;
     } catch (e) {
       throw Exception('Login failed: $e');
@@ -69,6 +69,7 @@ class AuthStateNotifier extends StateNotifier<bool> {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
+      await prefs.setString('userId', user['id']);
 
       _userProfile = user;
       state = true;
@@ -77,10 +78,49 @@ class AuthStateNotifier extends StateNotifier<bool> {
     }
   }
 
+  /// Mengambil data profil pengguna
+  Future<void> fetchUserProfile(String userId) async {
+    try {
+      final user = await _authService.getUserProfile(userId);
+      _userProfile = user;
+    } catch (e) {
+      throw Exception('Failed to fetch user profile: $e');
+    }
+  }
+
+  /// Memperbarui data pengguna
+  Future<void> updateUserProfile({
+    required String userId,
+    required Map<String, dynamic> updates,
+  }) async {
+    try {
+      final updatedUser = await _authService.updateUser(
+        userId: userId,
+        updates: updates,
+      );
+      _userProfile = updatedUser;
+      await fetchUserProfile(userId);
+      state = true;
+    } catch (e) {
+      throw Exception('Failed to update user profile: $e');
+    }
+  }
+
+  /// Menghapus akun pengguna
+  Future<void> deleteAccount(String userId) async {
+    try {
+      await _authService.deleteUser(userId);
+      await logout();
+    } catch (e) {
+      throw Exception('Failed to delete account: $e');
+    }
+  }
+
   /// Fungsi logout
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
+    await prefs.remove('userId');
     _userProfile = null;
     state = false;
   }
