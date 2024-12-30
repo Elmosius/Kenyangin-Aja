@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final ValueChanged<String> onSearch;
+
   const SearchBarWidget({required this.onSearch, super.key});
 
   @override
@@ -11,15 +12,11 @@ class SearchBarWidget extends StatefulWidget {
 class _SearchBarWidgetState extends State<SearchBarWidget> {
   final TextEditingController _controller = TextEditingController();
 
-  void _handleSearch() {
-    widget.onSearch(_controller.text);
-  }
-
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
-      onSubmitted: (_) => _handleSearch(),
+      onChanged: widget.onSearch,
       decoration: InputDecoration(
         filled: true,
         hoverColor: Colors.white,
@@ -28,10 +25,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         suffixIcon: IconButton(
           icon: const Icon(Icons.filter_list),
           onPressed: () {
-            // Logika filter (jika ada)
+            // Logika filter tambahan (jika ada)
           },
         ),
-        hintText: "Cari nama tempat makan...",
+        hintText: "Search menu, restaurant or etc",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

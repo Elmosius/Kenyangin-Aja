@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:main/core/themes/colors.dart';
 
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
+  final String selectedLocation;
+  final ValueChanged<String> onLocationChanged;
+
+  const HeaderWidget({
+    required this.selectedLocation,
+    required this.onLocationChanged,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +25,13 @@ class HeaderWidget extends StatelessWidget {
           ),
           child: const Icon(
             Icons.location_pin,
-            color: AppColors.hitam,
+            color: Colors.black,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8),
           child: DropdownButton<String>(
-            value: "Bandung",
+            value: selectedLocation,
             style: GoogleFonts.inter(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -46,7 +52,11 @@ class HeaderWidget extends StatelessWidget {
                 child: Text("Surabaya"),
               ),
             ],
-            onChanged: (value) {},
+            onChanged: (value) {
+              if (value != null) {
+                onLocationChanged(value);
+              }
+            },
             underline: Container(),
             icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
           ),
