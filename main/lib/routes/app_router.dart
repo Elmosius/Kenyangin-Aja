@@ -16,17 +16,27 @@ import 'package:main/features/user/views/profile_page.dart';
 import 'package:main/features/user/views/top_rating_page.dart';
 import 'package:main/features/user/views/viral_page.dart';
 
-GoRouter appRouter(bool isLoggedIn) {
+GoRouter appRouter({required bool isLoggedIn, required String userRole}) {
   return GoRouter(
-    initialLocation: '/all-viral',
-    // initialLocation: isLoggedIn ? '/dashboard' : '/',
-    // redirect: (context, state) {
-    //   final loggingIn = state.uri.path == '/';
-    //   final registering = state.uri.path == '/';
-    //   if (!isLoggedIn && !loggingIn && !registering) return '/';
-    //   if (isLoggedIn && (loggingIn || registering)) return '/dashboard';
-    //   return null;
-    // },
+    initialLocation: isLoggedIn ? '/home' : '/',
+    redirect: (context, state) {
+      final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
+      final isLoggingIn = state.uri.toString() == '/login';
+      final isRegistering = state.uri.toString() == '/register';
+      final isIntro = state.uri.toString() == '/';
+
+      // Redirect to intro if not logged in
+      if (!isLoggedIn && !isLoggingIn && !isRegistering && !isIntro) {
+        return '/';
+      }
+
+      // Prevent non-admin users from accessing dashboard
+      if (isAccessingAdmin && userRole != 'admin') {
+        return '/home';
+      }
+
+      return null; // No redirection
+    },
     routes: [
       GoRoute(
         path: '/',

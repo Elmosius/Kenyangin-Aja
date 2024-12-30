@@ -12,12 +12,17 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authStateNotifierProvider.notifier);
     final isLoggedIn = ref.watch(authStateNotifierProvider);
+    final userRole = authState.userProfile?['role'] ?? '';
 
     return MaterialApp.router(
-      title: 'Admin Dashboard',
+      title: 'Welcome Kenyagins!',
       debugShowCheckedModeBanner: false,
-      routerConfig: appRouter(isLoggedIn),
+      routerConfig: appRouter(
+        isLoggedIn: isLoggedIn,
+        userRole: userRole,
+      ),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
