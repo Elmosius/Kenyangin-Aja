@@ -21,7 +21,6 @@ class ViralPlacesWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Judul dan Tombol Lihat Semua
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

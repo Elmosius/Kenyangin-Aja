@@ -6,6 +6,7 @@ import 'package:main/core/widgets/search_bar.dart';
 import 'package:main/core/widgets/top_rating.dart';
 import 'package:main/core/widgets/viral_place_list.dart';
 import 'package:main/data/providers/food_provider.dart';
+import 'package:main/data/providers/city_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,33 +16,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String searchQuery = ""; // Query pencarian
+  String searchQuery = "";
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
         final foodsAsync = ref.watch(foodProvider);
+        final selectedLocation = ref.watch(cityProvider);
 
         return Scaffold(
           backgroundColor: const Color(0xFFF5F5F5),
           body: foodsAsync.when(
             data: (foods) {
-              // Proses data untuk Top Rating dan Viral Places
-              final topRatingFoods = foods
+              // Filter data berdasarkan kota dan pencarian
+              final filteredFoods = foods
                   .where((food) =>
-                      food.rating >= 4.5 &&
+                      food.locations.any(
+                          (location) => location.city == selectedLocation) &&
                       food.name
                           .toLowerCase()
                           .contains(searchQuery.toLowerCase()))
+                  .toList();
+
+              // Proses data untuk Top Rating dan Viral Places
+              final topRatingFoods = filteredFoods
+                  .where((food) => food.rating >= 4.5)
                   .toList()
                 ..sort((a, b) => b.rating.compareTo(a.rating));
 
-              final viralPlacesFoods = foods
-                  .where((food) => food.name
-                      .toLowerCase()
-                      .contains(searchQuery.toLowerCase()))
-                  .toList()
+              final viralPlacesFoods = filteredFoods
                 ..sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
               // Cek apakah data kosong
@@ -54,9 +58,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     // Header
                     HeaderWidget(
-                      selectedLocation: "Bandung", // Tetap diatur di header
+                      selectedLocation: selectedLocation,
                       onLocationChanged: (value) {
-                        setState(() {});
+                        ref.read(cityProvider.notifier).setCity(value);
                       },
                     ),
                     const SizedBox(height: 24),

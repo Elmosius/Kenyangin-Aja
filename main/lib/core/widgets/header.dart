@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
+import 'package:main/data/providers/city_provider.dart';
 
-class HeaderWidget extends StatelessWidget {
-  final String selectedLocation;
-  final ValueChanged<String> onLocationChanged;
-
-  const HeaderWidget({
-    required this.selectedLocation,
-    required this.onLocationChanged,
-    super.key,
-  });
+class HeaderWidget extends ConsumerWidget {
+  const HeaderWidget(
+      {super.key,
+      required String selectedLocation,
+      required Null Function(dynamic value) onLocationChanged});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCity = ref.watch(cityProvider);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,13 +26,13 @@ class HeaderWidget extends StatelessWidget {
           ),
           child: const Icon(
             Icons.location_pin,
-            color: Colors.black,
+            color: AppColors.hitam,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8),
           child: DropdownButton<String>(
-            value: selectedLocation,
+            value: selectedCity,
             style: GoogleFonts.inter(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -39,22 +40,13 @@ class HeaderWidget extends StatelessWidget {
             ),
             dropdownColor: Colors.white,
             items: const [
-              DropdownMenuItem(
-                value: "Bandung",
-                child: Text("Bandung"),
-              ),
-              DropdownMenuItem(
-                value: "Jakarta",
-                child: Text("Jakarta"),
-              ),
-              DropdownMenuItem(
-                value: "Surabaya",
-                child: Text("Surabaya"),
-              ),
+              DropdownMenuItem(value: "Bandung", child: Text("Bandung")),
+              DropdownMenuItem(value: "Jakarta", child: Text("Jakarta")),
+              DropdownMenuItem(value: "Surabaya", child: Text("Surabaya")),
             ],
             onChanged: (value) {
               if (value != null) {
-                onLocationChanged(value);
+                ref.read(cityProvider.notifier).setCity(value);
               }
             },
             underline: Container(),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_grid.dart';
 import 'package:main/core/widgets/search_bar.dart';
+import 'package:main/data/providers/city_provider.dart';
 import 'package:main/data/providers/food_provider.dart';
 
 class ViralPage extends StatefulWidget {
@@ -20,15 +21,19 @@ class _ViralPageState extends State<ViralPage> {
     return Consumer(
       builder: (context, ref, child) {
         final foodsAsync = ref.watch(foodProvider);
+        final selectedLocation = ref.watch(cityProvider);
 
         return Scaffold(
           backgroundColor: const Color(0xFFF5F5F5),
           body: foodsAsync.when(
             data: (foods) {
               final viralFoods = foods
-                  .where((food) => food.name
-                      .toLowerCase()
-                      .contains(searchQuery.toLowerCase()))
+                  .where((food) =>
+                      food.locations.any(
+                          (location) => location.city == selectedLocation) &&
+                      food.name
+                          .toLowerCase()
+                          .contains(searchQuery.toLowerCase()))
                   .toList()
                 ..sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 

@@ -33,7 +33,7 @@ class FoodGridWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: foods.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: screenWidth < 600 ? 2 : 5,
+        crossAxisCount: screenWidth < 800 ? 2 : 5,
         crossAxisSpacing: 16,
         mainAxisSpacing: 32,
         childAspectRatio: childAspectRatio,

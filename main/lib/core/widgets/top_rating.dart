@@ -39,7 +39,7 @@ class TopRatingWidget extends StatelessWidget {
 
         // List of Top Rating Foods
         SizedBox(
-          height: 120, // Tinggi yang cukup untuk menampilkan teks dan avatar
+          height: 120,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: topRatingFoods.length,
@@ -60,19 +60,17 @@ class TopRatingWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
 
-                      // Food Name (Max 2 Lines)
                       SizedBox(
-                        width: 80, // Lebar yang cukup untuk menampilkan teks
+                        width: 80,
                         child: Text(
                           food.name,
                           style: GoogleFonts.montserrat(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
                           ),
-                          maxLines: 2, // Maksimal 2 baris
-                          overflow:
-                              TextOverflow.ellipsis, // Potong teks berlebih
-                          textAlign: TextAlign.center, // Teks rata tengah
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ],

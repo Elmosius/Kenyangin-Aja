@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_grid.dart';
 import 'package:main/core/widgets/search_bar.dart';
+import 'package:main/data/providers/city_provider.dart';
 import 'package:main/data/providers/food_provider.dart';
 
 class TopRatingPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _TopRatingPageState extends State<TopRatingPage> {
     return Consumer(
       builder: (context, ref, child) {
         final foodsAsync = ref.watch(foodProvider);
+        final selectedLocation = ref.watch(cityProvider);
 
         return Scaffold(
           backgroundColor: const Color(0xFFF5F5F5),
@@ -27,6 +29,8 @@ class _TopRatingPageState extends State<TopRatingPage> {
             data: (foods) {
               final topRatingFoods = foods
                   .where((food) =>
+                      food.locations.any(
+                          (location) => location.city == selectedLocation) &&
                       food.rating >= 4.5 &&
                       food.name
                           .toLowerCase()
