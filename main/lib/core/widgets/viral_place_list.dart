@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:go_router/go_router.dart';
+import 'package:main/core/widgets/grid_card.dart';
 import 'package:main/data/models/food.dart';
+import 'package:go_router/go_router.dart';
 
 class ViralPlacesWidget extends StatelessWidget {
   final List<Food> viralPlacesFoods;
-  const ViralPlacesWidget({required this.viralPlacesFoods, super.key});
+
+  const ViralPlacesWidget({
+    required this.viralPlacesFoods,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final double childAspectRatio = screenWidth < 800 ? 8 / 5 : 8 / 5;
+    final double childAspectRatio = screenWidth < 800 ? 5 / 4 : 8 / 5;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Judul dan Tombol Lihat Semua
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -34,70 +41,27 @@ class ViralPlacesWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
+
+        // Grid Konten
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
+          itemCount: viralPlacesFoods.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: screenWidth < 600 ? 2 : 5,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
             childAspectRatio: childAspectRatio,
           ),
-          itemCount: viralPlacesFoods.length,
           itemBuilder: (context, index) {
             final food = viralPlacesFoods[index];
-            return GestureDetector(
+            return GridCardWidget(
+              name: food.name,
+              imageUrl: food.imageUrl,
+              rating: food.rating,
               onTap: () {
-                // Navigate to Food Detail
+                context.goNamed('food_detail', extra: food);
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: NetworkImage(food.imageUrl),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.45),
-                      BlendMode.darken,
-                    ),
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      bottom: 16,
-                      left: 8,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            food.name,
-                            style: GoogleFonts.montserrat(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.star,
-                                  color: Colors.orange, size: 16),
-                              const SizedBox(width: 4),
-                              Text(
-                                "${food.rating.toStringAsFixed(1)} ratings",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             );
           },
         ),
