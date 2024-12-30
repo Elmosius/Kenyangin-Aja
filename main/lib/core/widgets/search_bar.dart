@@ -28,7 +28,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             // Logika filter tambahan (jika ada)
           },
         ),
-        hintText: "Search menu, restaurant or etc",
+        hintText: "Cari nama restoran...",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
