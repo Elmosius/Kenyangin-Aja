@@ -18,7 +18,7 @@ import 'package:main/features/user/views/viral_page.dart';
 
 GoRouter appRouter(bool isLoggedIn) {
   return GoRouter(
-    initialLocation: '/post-detail',
+    initialLocation: '/home',
     // initialLocation: isLoggedIn ? '/dashboard' : '/',
     // redirect: (context, state) {
     //   final loggingIn = state.uri.path == '/';
