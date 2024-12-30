@@ -6,13 +6,15 @@ class GridCardWidget extends StatelessWidget {
   final String imageUrl;
   final double rating;
   final VoidCallback onTap;
+  final Widget? trailingIcon;
 
   const GridCardWidget({
+    super.key,
     required this.name,
     required this.imageUrl,
     required this.rating,
     required this.onTap,
-    super.key,
+    this.trailingIcon,
   });
 
   @override
@@ -29,7 +31,7 @@ class GridCardWidget extends StatelessWidget {
                 image: NetworkImage(imageUrl),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4),
+                  Colors.black.withOpacity(0.45),
                   BlendMode.darken,
                 ),
               ),
@@ -39,13 +41,13 @@ class GridCardWidget extends StatelessWidget {
           Positioned(
             bottom: 16,
             left: 8,
-            right: 8,
+            right: trailingIcon != null ? 48 : 8, // Adjust for trailingIcon
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -59,8 +61,8 @@ class GridCardWidget extends StatelessWidget {
                     const Icon(Icons.star, color: Colors.orange, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      "${rating.toStringAsFixed(1)} ratings",
-                      style: GoogleFonts.inter(
+                      "$rating ratings",
+                      style: GoogleFonts.montserrat(
                         fontSize: 12,
                         color: Colors.white,
                       ),
@@ -70,6 +72,13 @@ class GridCardWidget extends StatelessWidget {
               ],
             ),
           ),
+          // Trailing Icon (e.g., Love Button)
+          if (trailingIcon != null)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: trailingIcon!,
+            ),
         ],
       ),
     );
