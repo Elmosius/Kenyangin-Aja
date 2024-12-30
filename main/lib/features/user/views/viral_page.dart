@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_grid.dart';
 import 'package:main/core/widgets/search_bar.dart';
+import 'package:main/core/widgets/title.dart';
 import 'package:main/data/providers/city_provider.dart';
 import 'package:main/data/providers/food_provider.dart';
 
@@ -43,14 +44,8 @@ class _ViralPageState extends State<ViralPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Tempat Makanan Lagi Viral Nich...",
-                      style: GoogleFonts.inter(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    const TitleWidget(
+                        title: "Tempat Makanan Lagi Viral Nich..."),
                     const SizedBox(height: 24),
                     SearchBarWidget(
                       onSearch: (query) {
