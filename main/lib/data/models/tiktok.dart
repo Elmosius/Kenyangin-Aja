@@ -10,7 +10,6 @@ class TikTok {
   final int playCount;
   final TikTokCreator creator;
   final List<String> hashtags;
-  final DateTime? createdAt;
 
   TikTok({
     required this.id,
@@ -22,7 +21,6 @@ class TikTok {
     required this.playCount,
     required this.creator,
     required this.hashtags,
-    this.createdAt,
   });
 
   factory TikTok.fromJson(Map<String, dynamic> json) {
@@ -36,7 +34,6 @@ class TikTok {
       playCount: json['play_count'],
       creator: TikTokCreator.fromJson(json['creator']),
       hashtags: List<String>.from(json['hashtags']),
-      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 }

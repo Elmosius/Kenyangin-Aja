@@ -16,6 +16,7 @@ const searchVideos = async (query) => {
       country: "id",
     });
 
+    // Filter dan mapping video
     const filteredVideos = res.json.data
       .filter((video) => {
         const stats = video.item.stats;
@@ -37,14 +38,21 @@ const searchVideos = async (query) => {
         hashtags: video.item.textExtra.map((tag) => tag.hashtagName),
       }));
 
+    // Simpan video baru ke database
+    const newVideos = [];
     for (const video of filteredVideos) {
       const exists = await TikTok.findOne({ id: video.id });
       if (!exists) {
-        await TikTok.create(video);
+        console.info(`Saving new video: ${video.id}`);
+        const savedVideo = await TikTok.create(video);
+        newVideos.push(savedVideo);
+      } else {
+        console.info(`Video already exists: ${video.id}`);
       }
     }
 
-    return filteredVideos;
+    console.info(`New videos added: ${newVideos.length}`);
+    return newVideos; // Return hanya video yang baru disimpan
   } catch (e) {
     console.error("Error fetching TikTok videos:", e.message);
     throw new Error("Failed to fetch TikTok videos");

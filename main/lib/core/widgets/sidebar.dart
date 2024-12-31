@@ -87,6 +87,12 @@ class Sidebar extends ConsumerWidget {
             onTap: () => context.goNamed('dashboard'),
           ),
           SidebarItem(
+            icon: Icons.api,
+            title: 'Search',
+            isActive: currentRoute == '/dashboard/search',
+            onTap: () => context.goNamed('search'),
+          ),
+          SidebarItem(
             icon: Icons.tiktok,
             title: 'Tiktok Ref',
             isActive: currentRoute == '/dashboard/list_tiktok',
