@@ -11,8 +11,6 @@ class FoodDetailPage extends ConsumerWidget {
   final String foodId;
   const FoodDetailPage({super.key, required this.foodId});
 
-  
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final foodAsync = ref.watch(foodDetailProvider(foodId));
@@ -33,7 +31,7 @@ class FoodDetailPage extends ConsumerWidget {
       body: foodAsync.when(
         data: (food) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

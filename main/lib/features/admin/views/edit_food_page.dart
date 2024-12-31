@@ -56,7 +56,7 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
               ))
           .toList(),
       imageUrl: _imageUrlController.text,
-      rating: 0.0, // Rating tidak diupdate di sini
+      rating: 0.0,
       tiktokRef: _selectedTikTokRef,
     );
 
@@ -100,7 +100,7 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
           }
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(30.0),
             child: Form(
               key: _formKey,
               child: SingleChildScrollView(
@@ -146,9 +146,12 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
                     const SizedBox(height: 16),
 
                     // Submit Button
-                    SubmitButton(
-                      formKey: _formKey,
-                      onSubmit: _updateFood,
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: SubmitButton(
+                        formKey: _formKey,
+                        onSubmit: _updateFood,
+                      ),
                     ),
                   ],
                 ),
