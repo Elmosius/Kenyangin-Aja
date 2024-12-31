@@ -23,6 +23,18 @@ final tiktokActionProvider =
   return TikTokActionNotifier(tiktokService);
 });
 
+final refreshTikTokProvider = FutureProvider<List<TikTok>>((ref) async {
+  final tiktokService = ref.read(tiktokServiceProvider);
+  return tiktokService.searchVideos("kulinerbandung");
+});
+
+final searchTikTokProvider = FutureProvider.family<List<TikTok>, String>(
+  (ref, query) async {
+    final tiktokService = ref.read(tiktokServiceProvider);
+    return tiktokService.searchVideos(query);
+  },
+);
+
 class TikTokActionNotifier extends StateNotifier<AsyncValue<void>> {
   final TikTokService _tiktokService;
 

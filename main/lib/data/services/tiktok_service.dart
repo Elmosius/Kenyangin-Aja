@@ -20,4 +20,11 @@ class TikTokService {
   Future<void> deleteVideo(String id) async {
     await _apiClient.delete('/api/tiktok/$id');
   }
+
+  Future<List<TikTok>> searchVideos(String query) async {
+    final response =
+        await _apiClient.get('/api/tiktok/search', params: {'query': query});
+    final data = response.data['data'] as List;
+    return data.map((json) => TikTok.fromJson(json)).toList();
+  }
 }
