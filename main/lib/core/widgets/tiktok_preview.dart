@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
 import 'package:main/data/providers/tiktok_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,17 +16,37 @@ class TikTokPreview extends ConsumerWidget {
 
     return tiktokDetailAsync.when(
       data: (tiktok) => Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 2,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Description: ${tiktok.description}'),
-              Text('Likes: ${tiktok.likeCount}'),
-              Text('Comments: ${tiktok.commentCount}'),
-              Text('Shares: ${tiktok.shareCount}'),
-              Text('Plays: ${tiktok.playCount}'),
-              const SizedBox(height: 8),
+              Text(
+                tiktok.description,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _statItem(Icons.thumb_up, tiktok.likeCount, 'Likes'),
+                  const SizedBox(width: 20),
+                  _statItem(Icons.comment, tiktok.commentCount, 'Comments'),
+                  const SizedBox(width: 20),
+                  _statItem(Icons.share, tiktok.shareCount, 'Shares'),
+                  const SizedBox(width: 20),
+                  _statItem(Icons.play_arrow, tiktok.playCount, 'Plays'),
+                ],
+              ),
+              const SizedBox(height: 16),
               GestureDetector(
                 onTap: () async {
                   final url = tiktok.videoLink;
@@ -33,15 +55,18 @@ class TikTokPreview extends ConsumerWidget {
                   } else {
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Could not open TikTok')),
+                      const SnackBar(
+                        content: Text('Could not open TikTok'),
+                      ),
                     );
                   }
                 },
-                child: const Text(
+                child: Text(
                   'Watch Video',
-                  style: TextStyle(
-                    color: Colors.blue,
+                  style: GoogleFonts.inter(
+                    color: Colors.blueAccent,
                     decoration: TextDecoration.underline,
+                    decorationColor: Colors.blueAccent,
                   ),
                 ),
               ),
@@ -49,8 +74,32 @@ class TikTokPreview extends ConsumerWidget {
           ),
         ),
       ),
-      loading: () => const CircularProgressIndicator(),
-      error: (error, stack) => Text('Failed to load TikTok details: $error'),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          'Failed to load TikTok details: $error',
+          style: GoogleFonts.inter(color: Colors.red),
+        ),
+      ),
+    );
+  }
+
+  Widget _statItem(IconData icon, int value, String label) {
+    return Column(
+      children: [
+        Icon(icon, size: 14, color: AppColors.hijauTua),
+        const SizedBox(height: 5),
+        Text(
+          '$value',
+          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 12),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          label,
+          style: GoogleFonts.inter(fontSize: 12, color: Colors.grey),
+        ),
+      ],
     );
   }
 }

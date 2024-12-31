@@ -15,6 +15,7 @@ class DashboardLayout extends StatelessWidget {
           ? null
           : AppBar(
               title: const Text('Admin Dashboard'),
+              backgroundColor: const Color(0xFFF5F5F5),
               leading: Builder(
                 builder: (context) => IconButton(
                   icon: const Icon(Icons.menu),

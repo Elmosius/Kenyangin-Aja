@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class FoodFormFields extends StatelessWidget {
   final TextEditingController nameController;
@@ -17,26 +20,94 @@ class FoodFormFields extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Nama Restoran
         TextFormField(
           controller: nameController,
-          decoration: const InputDecoration(labelText: 'Food Name'),
+          decoration: InputDecoration(
+            labelText: 'Nama Restoran',
+            hintText: 'Masukkan nama restoran',
+            labelStyle: GoogleFonts.inter(
+                color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+            hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+            suffixIcon: const Icon(
+              Icons.restaurant,
+              color: Colors.black,
+              size: 18,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: AppColors.hijauTua),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
           validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter the food name' : null,
+              value?.isEmpty ?? true ? 'Nama restoran masih kosong!' : null,
         ),
         const SizedBox(height: 16),
+
+        // Deskripsi Restoran
         TextFormField(
           controller: descriptionController,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: InputDecoration(
+            labelText: 'Deskripsi Restoran',
+            hintText: 'Masukkan deskripsi singkat restoran',
+            labelStyle: GoogleFonts.inter(
+                color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 12,
+            ),
+            suffixIcon: Icon(
+              MdiIcons.text,
+              color: Colors.black,
+              size: 18,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: AppColors.hijauTua),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
           maxLines: 3,
           validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter the description' : null,
+              value?.isEmpty ?? true ? 'Deskripsi masih kosong!' : null,
         ),
         const SizedBox(height: 16),
+
+        // URL Gambar Restoran
         TextFormField(
           controller: imageUrlController,
-          decoration: const InputDecoration(labelText: 'Image URL'),
+          decoration: InputDecoration(
+            labelText: 'URL Gambar Restoran',
+            hintText: 'Masukkan URL gambar',
+            labelStyle: GoogleFonts.inter(
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+            hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 12,
+            ),
+            suffixIcon: const Icon(
+              Icons.image,
+              color: Colors.black,
+              size: 18,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: AppColors.hijauTua),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
           validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter the image URL' : null,
+              value?.isEmpty ?? true ? 'URL gambar masih kosong!' : null,
         ),
       ],
     );

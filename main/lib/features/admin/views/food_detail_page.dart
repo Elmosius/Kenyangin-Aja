@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/data/providers/food_provider.dart';
 import 'package:main/data/providers/tiktok_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,8 +16,13 @@ class FoodDetailPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Food Detail',
+          style: GoogleFonts.inter(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         backgroundColor: const Color(0xFFF5F5F5),
       ),

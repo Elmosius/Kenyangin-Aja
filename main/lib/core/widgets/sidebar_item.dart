@@ -21,18 +21,18 @@ class SidebarItem extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: isActive ? AppColors.hijau : AppColors.hitam,
+        color: isActive ? AppColors.hijauTua : AppColors.hitam,
         size: 20,
       ),
       title: Text(
         title,
         style: GoogleFonts.roboto(
-          color: isActive ? AppColors.hijau : AppColors.hitam,
+          color: isActive ? AppColors.hijauTua : AppColors.hitam,
           fontSize: 16,
         ),
       ),
       onTap: onTap,
-      tileColor: isActive ? AppColors.hijau : null,
+      tileColor: isActive ? AppColors.hijauTua : null,
     );
   }
 }

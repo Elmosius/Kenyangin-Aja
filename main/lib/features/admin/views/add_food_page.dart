@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_form.dart';
 import 'package:main/core/widgets/loc_list.dart';
 import 'package:main/core/widgets/submit_button.dart';
@@ -28,7 +29,14 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Food'),
+        title: Text(
+          'Add Food',
+          style: GoogleFonts.inter(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         backgroundColor: const Color(0xFFF5F5F5),
       ),
       body: Padding(
@@ -54,7 +62,7 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                     setState(() => _locations.removeAt(index));
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 TikTokDropdown(
                   selectedTikTokRef: _selectedTikTokRef,
                   onChanged: (value) => setState(() {
@@ -65,30 +73,49 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                 if (_selectedTikTokRef != null)
                   TikTokPreview(tiktokRef: _selectedTikTokRef!),
                 const SizedBox(height: 16),
-                SubmitButton(
-                  formKey: _formKey,
-                  onSubmit: () async {
-                    final food = Food(
-                      id: '',
-                      name: _nameController.text,
-                      description: _descriptionController.text,
-                      locations: _locations.map((loc) {
-                        return Location(
-                          city: loc['city']!,
-                          address: loc['address']!,
-                          url: loc['url'],
+                Align(
+                  alignment: Alignment.topRight,
+                  child: SubmitButton(
+                    formKey: _formKey,
+                    onSubmit: () async {
+                      if (_formKey.currentState?.validate() != true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content:
+                                  Text('Please fill in all required fields.')),
                         );
-                      }).toList(),
-                      imageUrl: _imageUrlController.text,
-                      rating: 0.0,
-                      tiktokRef: _selectedTikTokRef,
-                      createdAt: DateTime.now(),
-                    );
+                        return;
+                      }
+                      if (_locations.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content:
+                                  Text('Please add at least one location.')),
+                        );
+                        return;
+                      }
+                      final food = Food(
+                        id: '',
+                        name: _nameController.text,
+                        description: _descriptionController.text,
+                        locations: _locations.map((loc) {
+                          return Location(
+                            city: loc['city']!,
+                            address: loc['address']!,
+                            url: loc['url']!,
+                          );
+                        }).toList(),
+                        imageUrl: _imageUrlController.text,
+                        rating: 0.0,
+                        tiktokRef: _selectedTikTokRef,
+                        createdAt: DateTime.now(),
+                      );
 
-                    await ref.read(foodProvider.notifier).addFood(food);
-                    if (!context.mounted) return;
-                    Navigator.of(context).pop();
-                  },
+                      await ref.read(foodProvider.notifier).addFood(food);
+                      if (!context.mounted) return;
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
               ],
             ),

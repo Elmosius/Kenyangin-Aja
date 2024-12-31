@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
 
 class SubmitButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -13,12 +15,22 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.orange),
+      ),
       onPressed: () {
         if (formKey.currentState!.validate()) {
           onSubmit();
         }
       },
-      child: const Text('Submit'),
+      child: Text(
+        'Submit',
+        style: GoogleFonts.inter(
+          color: AppColors.hitam,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

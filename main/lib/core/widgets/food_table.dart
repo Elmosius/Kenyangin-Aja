@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_actions.dart';
 import 'package:main/core/widgets/food_cell.dart';
-import 'package:main/features/admin/views/food_list_page.dart';
 
 class FoodListTable extends StatelessWidget {
   final List<dynamic> foods;
@@ -22,11 +22,43 @@ class FoodListTable extends StatelessWidget {
                 minWidth: constraints.maxWidth,
               ),
               child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Name')),
-                  DataColumn(label: Text('City')),
-                  DataColumn(label: Text('Rating')),
-                  DataColumn(label: Text('Actions')),
+                columns: [
+                  DataColumn(
+                      label: Text(
+                    'Name',
+                    style: GoogleFonts.roboto(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )),
+                  DataColumn(
+                      label: Text(
+                    'City',
+                    style: GoogleFonts.roboto(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )),
+                  DataColumn(
+                      label: Text(
+                    'Rating',
+                    style: GoogleFonts.roboto(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )),
+                  DataColumn(
+                      label: Text(
+                    'Actions',
+                    style: GoogleFonts.roboto(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )),
                 ],
                 rows: foods.map((food) {
                   final location =

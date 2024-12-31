@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/food_table.dart';
 import 'package:main/data/providers/food_provider.dart';
 
@@ -12,7 +13,14 @@ class FoodListPage extends ConsumerWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Food List'),
+          title: Text(
+            'Food List',
+            style: GoogleFonts.inter(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           backgroundColor: const Color(0xFFF5F5F5),
         ),
         body: foodsAsync.when(

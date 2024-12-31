@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
 import 'package:main/data/models/tiktok.dart';
 import 'package:main/data/providers/tiktok_provider.dart';
 
@@ -21,24 +23,49 @@ class TikTokDropdown extends ConsumerWidget {
       future: tiktokFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (snapshot.hasError) {
-          return Text('Failed to load TikTok data: ${snapshot.error}');
-        } else if (snapshot.hasData) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(
+              'Failed to load TikTok data: ${snapshot.error}',
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
+        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           final tiktoks = snapshot.data!;
           return DropdownButtonFormField<String>(
+            isDense: true,
+            dropdownColor: Colors.white,
             value: selectedTikTokRef,
-            decoration: const InputDecoration(labelText: 'TikTok Ref'),
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: AppColors.hijauTua),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              labelText: 'TikTok Video Reference',
+              labelStyle: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
             items: tiktoks.map((TikTok tiktok) {
               return DropdownMenuItem(
                 value: tiktok.id,
                 child: ConstrainedBox(
-                  constraints:
-                      const BoxConstraints(maxWidth: 500), // Batasi lebar
-                  child: Text(
-                    tiktok.creator.name ,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  child: SizedBox(
+                    width: 300,
+                    child: Text(
+                      '${tiktok.creator.name} - ${tiktok.description}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               );
@@ -46,7 +73,10 @@ class TikTokDropdown extends ConsumerWidget {
             onChanged: onChanged,
           );
         } else {
-          return const Text('No TikTok data available');
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Text('No TikTok data available'),
+          );
         }
       },
     );

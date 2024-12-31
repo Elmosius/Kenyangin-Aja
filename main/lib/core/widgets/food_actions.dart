@@ -23,7 +23,7 @@ class FoodActionButtons extends ConsumerWidget {
           },
         ),
         IconButton(
-          icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
+          icon: const Icon(Icons.edit, color: Colors.blueGrey, size: 20),
           onPressed: () {
             context.goNamed(
               'edit_food',
