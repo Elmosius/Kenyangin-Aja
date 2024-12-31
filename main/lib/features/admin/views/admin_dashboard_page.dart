@@ -24,11 +24,10 @@ class DashboardLayout extends StatelessWidget {
                 ),
               ),
             ),
-      drawer:
-          isLargeScreen ? null : const Sidebar(), // Drawer untuk layar kecil
+      drawer: isLargeScreen ? null : const Sidebar(),
       body: Row(
         children: [
-          if (isLargeScreen) const Sidebar(), // Sidebar permanen di layar besar
+          if (isLargeScreen) const Sidebar(),
           Expanded(
             child: Container(
               color: Colors.grey[100],

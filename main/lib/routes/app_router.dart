@@ -24,7 +24,7 @@ GoRouter appRouter({
 }) {
   log('nama role $userRole');
   return GoRouter(
-    initialLocation: isLoggedIn ? '/home' : '/',
+    initialLocation: isLoggedIn ? '/dashboard' : '/',
     redirect: (context, state) {
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';
@@ -112,31 +112,29 @@ GoRouter appRouter({
             builder: (context, state) => const DashboardLayout(
               child: FoodListPage(),
             ),
-            routes: [
-              GoRoute(
-                path: 'add_food',
-                name: 'add_food',
-                builder: (context, state) => const DashboardLayout(
-                  child: AddFoodPage(),
-                ),
-              ),
-              GoRoute(
-                path: 'edit_food/:id',
-                name: 'edit_food',
-                builder: (context, state) {
-                  final foodId = state.pathParameters['id']!;
-                  return EditFoodPage(foodId: foodId);
-                },
-              ),
-              GoRoute(
-                path: 'food_detail/:id',
-                name: 'food_detail',
-                builder: (context, state) {
-                  final foodId = state.pathParameters['id']!;
-                  return FoodDetailPage(foodId: foodId);
-                },
-              ),
-            ],
+          ),
+          GoRoute(
+            path: 'add_food',
+            name: 'add_food',
+            builder: (context, state) => const DashboardLayout(
+              child: AddFoodPage(),
+            ),
+          ),
+          GoRoute(
+            path: 'edit_food/:id',
+            name: 'edit_food',
+            builder: (context, state) {
+              final foodId = state.pathParameters['id']!;
+              return EditFoodPage(foodId: foodId);
+            },
+          ),
+          GoRoute(
+            path: 'food_detail/:id',
+            name: 'food_detail',
+            builder: (context, state) {
+              final foodId = state.pathParameters['id']!;
+              return FoodDetailPage(foodId: foodId);
+            },
           ),
         ],
       ),

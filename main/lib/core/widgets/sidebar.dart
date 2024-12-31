@@ -55,7 +55,7 @@ class Sidebar extends ConsumerWidget {
             onTap: () async {
               await authNotifier.logout();
               if (!context.mounted) return;
-              context.go('/login');
+              context.goNamed('login');
             },
           ),
         ],
