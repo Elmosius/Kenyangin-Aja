@@ -22,49 +22,69 @@ class FoodListTable extends StatelessWidget {
                 minWidth: constraints.maxWidth,
               ),
               child: DataTable(
+                headingRowColor:
+                    WidgetStateColor.resolveWith((states) => Colors.grey[200]!),
+                dataRowColor: WidgetStateColor.resolveWith((states) =>
+                    states.contains(WidgetState.selected)
+                        ? Colors.grey[300]!
+                        : Colors.white),
+                columnSpacing: 16,
+                horizontalMargin: 16,
+                border: TableBorder.all(
+                  color: Colors.grey[300]!,
+                  width: 1,
+                ),
                 columns: [
                   DataColumn(
-                      label: Text(
-                    'Name',
-                    style: GoogleFonts.roboto(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    label: Text(
+                      'Name',
+                      style: GoogleFonts.roboto(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  )),
+                  ),
                   DataColumn(
-                      label: Text(
-                    'City',
-                    style: GoogleFonts.roboto(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    label: Text(
+                      'City',
+                      style: GoogleFonts.roboto(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  )),
+                  ),
                   DataColumn(
-                      label: Text(
-                    'Rating',
-                    style: GoogleFonts.roboto(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    label: Text(
+                      'Rating',
+                      style: GoogleFonts.roboto(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  )),
+                  ),
                   DataColumn(
-                      label: Text(
-                    'Actions',
-                    style: GoogleFonts.roboto(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    label: Text(
+                      'Actions',
+                      style: GoogleFonts.roboto(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  )),
+                  ),
                 ],
-                rows: foods.map((food) {
+                rows: foods.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final food = entry.value;
                   final location =
                       food.locations.isNotEmpty ? food.locations.first : null;
 
                   return DataRow(
+                    color: WidgetStateColor.resolveWith((states) =>
+                        index.isEven ? Colors.grey[50]! : Colors.white),
                     cells: [
                       DataCell(FoodDataCell(
                         content: food.name,

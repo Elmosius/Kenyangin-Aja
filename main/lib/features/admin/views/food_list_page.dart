@@ -24,7 +24,10 @@ class FoodListPage extends ConsumerWidget {
           backgroundColor: const Color(0xFFF5F5F5),
         ),
         body: foodsAsync.when(
-          data: (foods) => FoodListTable(foods: foods),
+          data: (foods) => Padding(
+            padding: const EdgeInsets.all(20),
+            child: FoodListTable(foods: foods),
+          ),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stack) => Center(
             child: Text(
