@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/themes/colors.dart';
 import 'package:main/core/widgets/sidebar_item.dart';
 import 'package:main/data/providers/auth_state_notifier.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -19,28 +20,64 @@ class Sidebar extends ConsumerWidget {
 
     return Container(
       width: sidebarWidth,
-      color: Colors.white,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFFDE9151),
+            Color.fromARGB(171, 227, 222, 222),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 5),
-          Padding(
+          // Header Section
+          Container(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Admin Menu',
-              style: GoogleFonts.roboto(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
             ),
+            child: Row(
+              children: [
+                const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 20,
+                  child: Icon(Icons.person, color: AppColors.hitam),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Admin Dashboard',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const Divider(color: Colors.black54, thickness: 1),
+          const SizedBox(height: 20),
+
+          // Menu Items
           SidebarItem(
             icon: MdiIcons.home,
             title: 'Dashboard',
             isActive: currentRoute == '/dashboard',
             onTap: () => context.goNamed('dashboard'),
+          ),
+          SidebarItem(
+            icon: Icons.tiktok,
+            title: 'Tiktok Ref',
+            isActive: currentRoute == '/dashboard/tiktok_list',
+            onTap: () => context.goNamed('list_tiktok'),
           ),
           SidebarItem(
             icon: MdiIcons.food,
@@ -54,6 +91,7 @@ class Sidebar extends ConsumerWidget {
             isActive: currentRoute == '/dashboard/add_food',
             onTap: () => context.goNamed('add_food'),
           ),
+          const Divider(color: Colors.white70, thickness: 1),
           SidebarItem(
             icon: Icons.logout,
             title: 'Logout',

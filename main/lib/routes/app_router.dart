@@ -29,7 +29,7 @@ GoRouter appRouter({
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';
       final isRegistering = state.uri.toString() == '/register';
-      final isIntro = state.uri.toString() == '/';
+    final isIntro = state.uri.toString() == '/';
 
       if (!isLoggedIn && !isLoggingIn && !isRegistering && !isIntro) {
         return '/';
