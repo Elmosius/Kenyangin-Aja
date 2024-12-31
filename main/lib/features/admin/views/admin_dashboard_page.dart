@@ -30,7 +30,7 @@ class DashboardLayout extends StatelessWidget {
           if (isLargeScreen) const Sidebar(),
           Expanded(
             child: Container(
-              color: Colors.grey[100],
+              color: const Color(0xFFF5F5F5),
               child: child,
             ),
           ),
