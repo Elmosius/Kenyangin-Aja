@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main/core/widgets/sidebar_item.dart';
 import 'package:main/data/providers/auth_state_notifier.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -12,6 +13,7 @@ class Sidebar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.read(authStateNotifierProvider.notifier);
     final mediaQuery = MediaQuery.of(context);
+    final currentRoute = GoRouterState.of(context).uri.toString();
 
     final double sidebarWidth = mediaQuery.size.width > 600 ? 250 : 200;
 
@@ -26,7 +28,7 @@ class Sidebar extends ConsumerWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'Admin Menu',
-              style: GoogleFonts.lato(
+              style: GoogleFonts.roboto(
                 color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -37,16 +39,19 @@ class Sidebar extends ConsumerWidget {
           SidebarItem(
             icon: MdiIcons.home,
             title: 'Dashboard',
+            isActive: currentRoute == '/dashboard',
             onTap: () => context.goNamed('dashboard'),
           ),
           SidebarItem(
             icon: MdiIcons.food,
-            title: 'Food List',
+            title: 'Foods',
+            isActive: currentRoute == '/dashboard/list_food',
             onTap: () => context.goNamed('list_food'),
           ),
           SidebarItem(
             icon: Icons.add,
             title: 'Add Food',
+            isActive: currentRoute == '/dashboard/add_food',
             onTap: () => context.goNamed('add_food'),
           ),
           SidebarItem(
@@ -60,38 +65,6 @@ class Sidebar extends ConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class SidebarItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final VoidCallback onTap;
-
-  const SidebarItem({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: Colors.black,
-        size: 20,
-      ),
-      title: Text(
-        title,
-        style: GoogleFonts.roboto(
-          color: Colors.black,
-          fontSize: 16,
-        ),
-      ),
-      onTap: onTap,
     );
   }
 }
