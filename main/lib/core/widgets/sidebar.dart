@@ -89,7 +89,7 @@ class Sidebar extends ConsumerWidget {
           SidebarItem(
             icon: Icons.tiktok,
             title: 'Tiktok Ref',
-            isActive: currentRoute == '/dashboard/tiktok_list',
+            isActive: currentRoute == '/dashboard/list_tiktok',
             onTap: () => context.goNamed('list_tiktok'),
           ),
           SidebarItem(

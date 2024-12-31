@@ -6,6 +6,7 @@ import 'package:main/features/admin/views/admin_dashboard_page.dart';
 import 'package:main/features/admin/views/edit_food_page.dart';
 import 'package:main/features/admin/views/food_detail_page.dart';
 import 'package:main/features/admin/views/food_list_page.dart';
+import 'package:main/features/admin/views/tiktok_list_page.dart';
 import 'package:main/features/auth/views/intro_page.dart';
 import 'package:main/features/auth/views/login_page.dart';
 import 'package:main/features/auth/views/not_found.dart';
@@ -24,8 +25,7 @@ GoRouter appRouter({
 }) {
   log('nama role $userRole');
   return GoRouter(
-    initialLocation:
-        isLoggedIn ? '/dashboard/food_detail/675bcd61d26a2280e2917b45' : '/',
+    initialLocation: isLoggedIn ? '/dashboard/list_tiktok' : '/',
     redirect: (context, state) {
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';
@@ -107,6 +107,13 @@ GoRouter appRouter({
           child: Center(child: Text('Welcome to Admin Dashboard!')),
         ),
         routes: [
+          GoRoute(
+            path: 'list_tiktok',
+            name: 'list_tiktok',
+            builder: (context, state) => const DashboardLayout(
+              child: TikTokListPage(),
+            ),
+          ),
           GoRoute(
             path: 'list_food',
             name: 'list_food',
