@@ -9,8 +9,9 @@ import 'package:main/features/admin/layouts/food_info_card.dart';
 
 class FoodDetailPage extends ConsumerWidget {
   final String foodId;
-
   const FoodDetailPage({super.key, required this.foodId});
+
+  
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

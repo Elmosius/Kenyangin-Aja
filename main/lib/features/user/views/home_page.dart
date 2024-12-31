@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: const Color(0xFFF5F5F5),
           body: foodsAsync.when(
             data: (foods) {
-              // Filter data berdasarkan kota dan pencarian
               final filteredFoods = foods
                   .where((food) =>
                       food.locations.any(
@@ -39,7 +38,6 @@ class _HomePageState extends State<HomePage> {
                           .contains(searchQuery.toLowerCase()))
                   .toList();
 
-              // Proses data untuk Top Rating dan Viral Places
               final topRatingFoods = filteredFoods
                   .where((food) => food.rating >= 4.5)
                   .toList()
@@ -48,7 +46,6 @@ class _HomePageState extends State<HomePage> {
               final viralPlacesFoods = filteredFoods
                 ..sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
-              // Cek apakah data kosong
               final isEmpty =
                   topRatingFoods.isEmpty && viralPlacesFoods.isEmpty;
 
@@ -56,7 +53,6 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(35),
                 child: Column(
                   children: [
-                    // Header
                     HeaderWidget(
                       selectedLocation: selectedLocation,
                       onLocationChanged: (value) {
@@ -64,8 +60,6 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     const SizedBox(height: 24),
-
-                    // Search Bar
                     SearchBarWidget(
                       onSearch: (query) {
                         setState(() {
@@ -74,8 +68,6 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     const SizedBox(height: 24),
-
-                    // Konten Utama
                     if (isEmpty)
                       const EmptyStateWidget(
                         message:
@@ -83,15 +75,12 @@ class _HomePageState extends State<HomePage> {
                         imagePath: 'images/status_empty.png',
                       )
                     else ...[
-                      // Top Rating Section
                       if (topRatingFoods.isNotEmpty) ...[
                         TopRatingWidget(
                           topRatingFoods: topRatingFoods.take(5).toList(),
                         ),
                         const SizedBox(height: 24),
                       ],
-
-                      // Viral Places Section
                       if (viralPlacesFoods.isNotEmpty) ...[
                         ViralPlacesWidget(
                           viralPlacesFoods: viralPlacesFoods.take(4).toList(),
