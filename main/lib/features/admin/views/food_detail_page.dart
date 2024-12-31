@@ -14,7 +14,12 @@ class FoodDetailPage extends ConsumerWidget {
     final foodAsync = ref.watch(foodDetailProvider(foodId));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Food Detail')),
+      appBar: AppBar(
+        title: const Text(
+          'Food Detail',
+        ),
+        backgroundColor: const Color(0xFFF5F5F5),
+      ),
       body: foodAsync.when(
         data: (food) {
           final tiktokDetailAsync = food.tiktokRef != null
@@ -168,6 +173,7 @@ class FoodDetailPage extends ConsumerWidget {
           child: Text('Error loading food: $error'),
         ),
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
     );
   }
 }

@@ -12,7 +12,10 @@ class FoodListPage extends ConsumerWidget {
     final foodsAsync = ref.watch(foodProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Food List')),
+      appBar: AppBar(
+        title: const Text('Food List'),
+        backgroundColor: const Color(0xFFF5F5F5),
+      ),
       body: foodsAsync.when(
         data: (foods) => LayoutBuilder(
           builder: (context, constraints) {
@@ -62,6 +65,7 @@ class FoodListPage extends ConsumerWidget {
           ),
         ),
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
     );
   }
 

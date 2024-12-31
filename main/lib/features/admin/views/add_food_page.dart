@@ -27,7 +27,10 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Food')),
+      appBar: AppBar(
+        title: const Text('Add Food'),
+        backgroundColor: const Color(0xFFF5F5F5),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -92,6 +95,7 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
           ),
         ),
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
     );
   }
 }

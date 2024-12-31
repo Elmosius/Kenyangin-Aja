@@ -81,7 +81,10 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
     final foodAsync = ref.watch(foodDetailProvider(widget.foodId));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Food')),
+      appBar: AppBar(
+        title: const Text('Edit Food'),
+        backgroundColor: const Color(0xFFF5F5F5),
+      ),
       body: foodAsync.when(
         data: (food) {
           if (_nameController.text.isEmpty) {
@@ -150,6 +153,7 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
           child: Text('Error loading food: $error'),
         ),
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
     );
   }
 }
