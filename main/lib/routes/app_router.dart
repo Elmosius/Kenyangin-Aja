@@ -24,12 +24,13 @@ GoRouter appRouter({
 }) {
   log('nama role $userRole');
   return GoRouter(
-    initialLocation: isLoggedIn ? '/dashboard/add_food' : '/',
+    initialLocation:
+        isLoggedIn ? '/dashboard/food_detail/675bcd61d26a2280e2917b45' : '/',
     redirect: (context, state) {
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';
       final isRegistering = state.uri.toString() == '/register';
-    final isIntro = state.uri.toString() == '/';
+      final isIntro = state.uri.toString() == '/';
 
       if (!isLoggedIn && !isLoggingIn && !isRegistering && !isIntro) {
         return '/';

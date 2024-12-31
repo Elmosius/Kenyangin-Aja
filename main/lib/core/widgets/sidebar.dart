@@ -21,10 +21,23 @@ class Sidebar extends ConsumerWidget {
     return Container(
       width: sidebarWidth,
       decoration: const BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.black12,
+            width: 1.0,
+          ),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10.0,
+            offset: Offset(0, 5),
+          ),
+        ],
         gradient: LinearGradient(
           colors: [
             Color(0xFFDE9151),
-            Color.fromARGB(171, 227, 222, 222),
+            Color(0xFFF5F5F5),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomCenter,
