@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:main/core/widgets/food_actions.dart';
 import 'package:main/core/widgets/food_cell.dart';
 
@@ -22,10 +23,10 @@ class FoodListTable extends StatelessWidget {
                 minWidth: constraints.maxWidth,
               ),
               child: DataTable(
-                headingRowColor:
-                    WidgetStateColor.resolveWith((states) => Colors.grey[200]!),
-                dataRowColor: WidgetStateColor.resolveWith((states) =>
-                    states.contains(WidgetState.selected)
+                headingRowColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.grey[200]!),
+                dataRowColor: MaterialStateColor.resolveWith((states) =>
+                    states.contains(MaterialState.selected)
                         ? Colors.grey[300]!
                         : Colors.white),
                 columnSpacing: 16,
@@ -57,7 +58,7 @@ class FoodListTable extends StatelessWidget {
                   ),
                   DataColumn(
                     label: Text(
-                      'Rating',
+                      'Created At',
                       style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -82,8 +83,10 @@ class FoodListTable extends StatelessWidget {
                   final location =
                       food.locations.isNotEmpty ? food.locations.first : null;
 
+                  final String formattedDate = _formatDate(food.createdAt);
+
                   return DataRow(
-                    color: WidgetStateColor.resolveWith((states) =>
+                    color: MaterialStateColor.resolveWith((states) =>
                         index.isEven ? Colors.grey[50]! : Colors.white),
                     cells: [
                       DataCell(FoodDataCell(
@@ -97,8 +100,8 @@ class FoodListTable extends StatelessWidget {
                         maxLines: 2,
                       )),
                       DataCell(FoodDataCell(
-                        content: food.rating.toStringAsFixed(1),
-                        width: 50,
+                        content: formattedDate,
+                        width: 150,
                         maxLines: 1,
                       )),
                       DataCell(FoodActionButtons(foodId: food.id)),
@@ -111,5 +114,18 @@ class FoodListTable extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _formatDate(dynamic createdAt) {
+    try {
+      // Check if the `createdAt` is already a DateTime or a String
+      final date = createdAt is DateTime
+          ? createdAt
+          : DateTime.parse(createdAt as String);
+      final formatter = DateFormat('dd-MM-yyyy HH:mm:ss');
+      return formatter.format(date);
+    } catch (e) {
+      return "Invalid Date";
+    }
   }
 }
