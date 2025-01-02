@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,6 +47,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final userEmail = userProfile['email'] ?? 'Unknown';
     final accountCreationDate = userProfile['createdAt'] ?? 'Unknown';
     final role = userProfile['role'] ?? 'user';
+
+    log(role);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
