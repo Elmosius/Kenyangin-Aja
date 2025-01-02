@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 class FoodGridWidget extends StatelessWidget {
   final List<Food> foods;
   final String emptyMessage;
+  final Widget Function(Food)? trailingIconBuilder;
 
   const FoodGridWidget({
     required this.foods,
     required this.emptyMessage,
+    this.trailingIconBuilder,
     super.key,
   });
 
@@ -47,6 +49,8 @@ class FoodGridWidget extends StatelessWidget {
           onTap: () {
             context.goNamed('food_detail', extra: food);
           },
+          trailingIcon:
+              trailingIconBuilder != null ? trailingIconBuilder!(food) : null,
         );
       },
     );
