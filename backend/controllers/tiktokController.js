@@ -40,6 +40,14 @@ const deleteTikTokVideo = async (req, res) => {
   const { id } = req.params;
 
   try {
+    const isReferenced = await Food.exists({ tiktokRef: id });
+
+    if (isReferenced) {
+      return res.status(500).json({
+        message: "Cannot delete TikTok. It is still referenced by Food.",
+      });
+    }
+
     const video = await TikTok.findOneAndDelete({ id });
     if (!video) {
       return res.status(404).json({ message: "Video not found" });

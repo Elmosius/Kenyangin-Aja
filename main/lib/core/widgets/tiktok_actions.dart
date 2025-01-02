@@ -73,23 +73,31 @@ class TikTokActions extends ConsumerWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Delete TikTok',
-              style: GoogleFonts.inter(color: Colors.black)),
-          content: Text('Are you sure you want to delete this TikTok video?',
-              style: GoogleFonts.inter(color: Colors.black)),
+          title: Text(
+            'Delete TikTok',
+            style: GoogleFonts.inter(color: Colors.black),
+          ),
+          content: Text(
+            'Are you sure you want to delete this TikTok video?',
+            style: GoogleFonts.inter(color: Colors.black),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child:
-                  Text('Cancel', style: GoogleFonts.inter(color: Colors.black)),
+              child: Text(
+                'Cancel',
+                style: GoogleFonts.inter(color: Colors.black),
+              ),
             ),
             TextButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(Colors.red),
               ),
               onPressed: () => Navigator.pop(context, true),
-              child:
-                  Text('Delete', style: GoogleFonts.inter(color: Colors.white)),
+              child: Text(
+                'Delete',
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
             ),
           ],
         );
@@ -97,17 +105,20 @@ class TikTokActions extends ConsumerWidget {
     );
 
     if (confirmed == true) {
-      try {
-        await ref.read(tiktokActionProvider.notifier).deleteTikTok(tiktok.id);
-        if (context.mounted) {
+      final notifier = ref.read(tiktokActionProvider.notifier);
+
+      await notifier.deleteTikTok(tiktok.id);
+
+      final state = ref.read(tiktokActionProvider);
+
+      if (context.mounted) {
+        if (state.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to delete TikTok Ref')),
+          );
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('TikTok deleted successfully')),
-          );
-        }
-      } catch (e) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete TikTok: $e')),
           );
         }
       }
