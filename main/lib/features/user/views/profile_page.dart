@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main/core/widgets/creation_card.dart';
+import 'package:main/core/widgets/custom_button.dart';
+import 'package:go_router/go_router.dart';
 import 'package:main/data/providers/auth_state_notifier.dart';
 import 'package:main/data/providers/favorite_provider.dart';
 import 'package:main/core/widgets/delete_button.dart';
@@ -42,11 +44,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final userName = userProfile['name'] ?? 'Unknown';
     final userEmail = userProfile['email'] ?? 'Unknown';
     final accountCreationDate = userProfile['createdAt'] ?? 'Unknown';
+    final role = userProfile['role'] ?? 'user';
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+        padding: const EdgeInsets.all(35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -75,13 +78,28 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             ),
             const SizedBox(height: 24),
 
-            // Delete Account Button
-            DeleteButton(
-              onConfirmed: () {
-                ref
-                    .read(authStateNotifierProvider.notifier)
-                    .deleteAccount(userId);
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (role == 'admin')
+                  CustomButton(
+                    text: 'Admin Page',
+                    onPressed: () {
+                      context.goNamed('dashboard');
+                    },
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    fontSize: 12,
+                  ),
+                // Delete Account Button
+                DeleteButton(
+                  onConfirmed: () {
+                    ref
+                        .read(authStateNotifierProvider.notifier)
+                        .deleteAccount(userProfile['id']);
+                  },
+                ),
+              ],
             ),
           ],
         ),
