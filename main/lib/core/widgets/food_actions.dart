@@ -17,7 +17,7 @@ class FoodActionButtons extends ConsumerWidget {
           icon: Icon(MdiIcons.eye, color: Colors.black, size: 20),
           onPressed: () {
             context.goNamed(
-              'food_detail',
+              'food-detail',
               pathParameters: {'id': foodId},
             );
           },
@@ -26,7 +26,7 @@ class FoodActionButtons extends ConsumerWidget {
           icon: const Icon(Icons.edit, color: Colors.blueGrey, size: 20),
           onPressed: () {
             context.goNamed(
-              'edit_food',
+              'edit-food',
               pathParameters: {'id': foodId},
             );
           },

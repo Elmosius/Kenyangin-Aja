@@ -26,7 +26,7 @@ GoRouter appRouter({
 }) {
   log('nama role $userRole');
   return GoRouter(
-    initialLocation: isLoggedIn ? '/dashboard/search' : '/',
+    initialLocation: isLoggedIn ? '/dashboard/add-food' : '/',
     redirect: (context, state) {
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';
@@ -116,37 +116,37 @@ GoRouter appRouter({
             ),
           ),
           GoRoute(
-            path: 'list_tiktok',
-            name: 'list_tiktok',
+            path: 'list-tiktok',
+            name: 'list-tiktok',
             builder: (context, state) => const DashboardLayout(
               child: TikTokListPage(),
             ),
           ),
           GoRoute(
-            path: 'list_food',
-            name: 'list_food',
+            path: 'list-food',
+            name: 'list-food',
             builder: (context, state) => const DashboardLayout(
               child: FoodListPage(),
             ),
           ),
           GoRoute(
-            path: 'add_food',
-            name: 'add_food',
+            path: 'add-food',
+            name: 'add-food',
             builder: (context, state) => const DashboardLayout(
               child: AddFoodPage(),
             ),
           ),
           GoRoute(
-            path: 'edit_food/:id',
-            name: 'edit_food',
+            path: 'edit-food/:id',
+            name: 'edit-food',
             builder: (context, state) {
               final foodId = state.pathParameters['id']!;
               return EditFoodPage(foodId: foodId);
             },
           ),
           GoRoute(
-            path: 'food_detail/:id',
-            name: 'food_detail',
+            path: 'food-detail/:id',
+            name: 'food-detail',
             builder: (context, state) {
               final foodId = state.pathParameters['id']!;
               return FoodDetailPage(foodId: foodId);

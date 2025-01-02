@@ -95,20 +95,20 @@ class Sidebar extends ConsumerWidget {
           SidebarItem(
             icon: Icons.tiktok,
             title: 'Tiktok Ref',
-            isActive: currentRoute == '/dashboard/list_tiktok',
-            onTap: () => context.goNamed('list_tiktok'),
+            isActive: currentRoute == '/dashboard/list-tiktok',
+            onTap: () => context.goNamed('list-tiktok'),
           ),
           SidebarItem(
             icon: MdiIcons.food,
             title: 'Foods',
-            isActive: currentRoute == '/dashboard/list_food',
-            onTap: () => context.goNamed('list_food'),
+            isActive: currentRoute == '/dashboard/list-food',
+            onTap: () => context.goNamed('list-food'),
           ),
           SidebarItem(
             icon: Icons.add,
             title: 'Add Food',
-            isActive: currentRoute == '/dashboard/add_food',
-            onTap: () => context.goNamed('add_food'),
+            isActive: currentRoute == '/dashboard/add-food',
+            onTap: () => context.goNamed('add-food'),
           ),
           const Divider(color: Colors.white70, thickness: 1),
           SidebarItem(
