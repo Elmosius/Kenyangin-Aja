@@ -14,6 +14,8 @@ final favoriteProvider =
   return FavoriteNotifier(favoriteService);
 });
 
+
+
 class FavoriteNotifier extends StateNotifier<AsyncValue<List<Food>>> {
   final FavoriteService _service;
 
@@ -47,5 +49,12 @@ class FavoriteNotifier extends StateNotifier<AsyncValue<List<Food>>> {
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
+  }
+
+  /// Memeriksa apakah makanan ada di daftar favorit
+  bool isFavorite(String userId, String foodId) {
+    final favorites = state.value;
+    if (favorites == null) return false;
+    return favorites.any((food) => food.id == foodId);
   }
 }

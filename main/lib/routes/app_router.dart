@@ -28,7 +28,7 @@ GoRouter appRouter({
 }) {
   log('nama role $userRole');
   return GoRouter(
-    initialLocation: isLoggedIn ? '/home' : '/',
+    initialLocation: isLoggedIn ? '/post-detail/675bcd61d26a2280e2917b45' : '/',
     redirect: (context, state) {
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';
@@ -83,12 +83,14 @@ GoRouter appRouter({
         ),
       ),
       GoRoute(
-        path: '/post-detail',
-        name: 'post-detail',
-        builder: (context, state) => const MainPage(
-          child: PostDetailPage(),
-        ),
-      ),
+          path: '/post-detail/:id',
+          name: 'post-detail',
+          builder: (context, state) {
+            final postId = state.pathParameters['id']!;
+            return MainPage(
+              child: PostDetailPage(postId: postId),
+            );
+          }),
       GoRoute(
         path: '/all-viral',
         name: 'viral',
