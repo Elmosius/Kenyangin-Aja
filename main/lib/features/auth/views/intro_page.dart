@@ -134,6 +134,7 @@ class IntroPage extends StatelessWidget {
           ),
         ],
       ),
+      backgroundColor: Colors.white,
     );
   }
 }
