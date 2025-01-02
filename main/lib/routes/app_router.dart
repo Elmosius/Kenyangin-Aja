@@ -28,7 +28,8 @@ GoRouter appRouter({
 }) {
   log('nama role $userRole');
   return GoRouter(
-    initialLocation: isLoggedIn ? '/post-detail/675bcd61d26a2280e2917b45' : '/',
+    // initialLocation: isLoggedIn ? '/post-detail/675bcd61d26a2280e2917b45' : '/',
+    initialLocation: isLoggedIn ? '/home' : '/',
     redirect: (context, state) {
       final isAccessingAdmin = state.uri.toString().startsWith('/dashboard');
       final isLoggingIn = state.uri.toString() == '/login';

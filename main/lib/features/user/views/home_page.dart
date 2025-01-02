@@ -8,6 +8,7 @@ import 'package:main/features/user/layouts/viral_place_list.dart';
 import 'package:main/data/providers/food_provider.dart';
 import 'package:main/data/providers/city_provider.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 

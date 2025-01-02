@@ -47,19 +47,18 @@ class TopRatingWidget extends StatelessWidget {
               final food = topRatingFoods[index];
               return GestureDetector(
                 onTap: () {
-                  context.pushNamed('food_detail', extra: food);
+                  context.pushNamed('post-detail',
+                      pathParameters: {'id': food.id});
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: Column(
                     children: [
-                      // Circle Avatar
                       CircleAvatar(
                         radius: 35,
                         backgroundImage: NetworkImage(food.imageUrl),
                       ),
                       const SizedBox(height: 8),
-
                       SizedBox(
                         width: 80,
                         child: Text(

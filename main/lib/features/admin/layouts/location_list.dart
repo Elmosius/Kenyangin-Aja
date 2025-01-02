@@ -71,8 +71,9 @@ class LocationList extends StatelessWidget {
                             child: const Text(
                               'Visit Location',
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: Colors.blueAccent,
                                 decoration: TextDecoration.underline,
+                                decorationColor: Colors.blueAccent,
                               ),
                             ),
                           ),
