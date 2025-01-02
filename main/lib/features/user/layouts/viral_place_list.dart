@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:main/core/widgets/grid_card.dart';
+import 'package:main/core/widgets/food_grid.dart';
 import 'package:main/data/models/food.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,13 +14,10 @@ class ViralPlacesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final double childAspectRatio = screenWidth < 800 ? 5 / 4 : 8 / 5;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Header
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -42,27 +39,10 @@ class ViralPlacesWidget extends StatelessWidget {
         const SizedBox(height: 16),
 
         // Grid Konten
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: viralPlacesFoods.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: screenWidth < 600 ? 2 : 5,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: childAspectRatio,
-          ),
-          itemBuilder: (context, index) {
-            final food = viralPlacesFoods[index];
-            return GridCardWidget(
-              name: food.name,
-              imageUrl: food.imageUrl,
-              rating: food.rating,
-              onTap: () {
-                context.pushNamed('food_detail', extra: food);
-              },
-            );
-          },
+        FoodGridWidget(
+          foods: viralPlacesFoods,
+          emptyMessage: "Tidak ada tempat viral untuk saat ini.",
+          aspectRatio: 5 / 3,
         ),
       ],
     );
