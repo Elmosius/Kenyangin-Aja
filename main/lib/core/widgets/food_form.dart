@@ -7,12 +7,14 @@ class FoodFormFields extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController descriptionController;
   final TextEditingController imageUrlController;
+  final bool isEditMode;
 
   const FoodFormFields({
     super.key,
     required this.nameController,
     required this.descriptionController,
     required this.imageUrlController,
+    this.isEditMode = false, 
   });
 
   @override
@@ -25,7 +27,8 @@ class FoodFormFields extends StatelessWidget {
           controller: nameController,
           decoration: InputDecoration(
             labelText: 'Nama Restoran',
-            hintText: 'Masukkan nama restoran',
+            hintText:
+                isEditMode ? 'Edit nama restoran' : 'Masukkan nama restoran',
             labelStyle: GoogleFonts.inter(
                 color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
             hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
@@ -52,7 +55,9 @@ class FoodFormFields extends StatelessWidget {
           controller: descriptionController,
           decoration: InputDecoration(
             labelText: 'Deskripsi Restoran',
-            hintText: 'Masukkan deskripsi singkat restoran',
+            hintText: isEditMode
+                ? 'Edit deskripsi restoran'
+                : 'Masukkan deskripsi singkat restoran',
             labelStyle: GoogleFonts.inter(
                 color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
             hintStyle: const TextStyle(
@@ -83,7 +88,8 @@ class FoodFormFields extends StatelessWidget {
           controller: imageUrlController,
           decoration: InputDecoration(
             labelText: 'URL Gambar Restoran',
-            hintText: 'Masukkan URL gambar',
+            hintText:
+                isEditMode ? 'Edit URL gambar restoran' : 'Masukkan URL gambar',
             labelStyle: GoogleFonts.inter(
               color: Colors.black,
               fontSize: 14,

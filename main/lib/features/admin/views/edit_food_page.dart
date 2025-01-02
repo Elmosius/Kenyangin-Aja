@@ -112,6 +112,7 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
                       nameController: _nameController,
                       descriptionController: _descriptionController,
                       imageUrlController: _imageUrlController,
+                      isEditMode: true, // Indikasi untuk edit mode
                     ),
                     const SizedBox(height: 16),
 
@@ -129,9 +130,13 @@ class _EditFoodPageState extends ConsumerState<EditFoodPage> {
                         });
                       },
                     ),
-                    const SizedBox(height: 16),
-
-                    // TikTok Dropdown
+                    const SizedBox(height: 20),
+                    Text(
+                      'Reference',
+                      style: GoogleFonts.inter(
+                          fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 20),
                     TikTokDropdown(
                       selectedTikTokRef: _selectedTikTokRef,
                       onChanged: (value) => setState(() {

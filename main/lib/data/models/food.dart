@@ -45,7 +45,7 @@ class Food {
       'imageUrl': imageUrl,
       'rating': rating,
       'tiktokRef': tiktokRef,
-      'createdAt': createdAt!.toIso8601String(),
+      'createdAt': createdAt?.toIso8601String(),
     };
   }
 }
