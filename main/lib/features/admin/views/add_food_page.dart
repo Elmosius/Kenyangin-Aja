@@ -63,6 +63,12 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                   },
                 ),
                 const SizedBox(height: 20),
+                Text(
+                  'Reference',
+                  style: GoogleFonts.inter(
+                      fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
                 TikTokDropdown(
                   selectedTikTokRef: _selectedTikTokRef,
                   onChanged: (value) => setState(() {
@@ -81,16 +87,17 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                       if (_formKey.currentState?.validate() != true) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content:
-                                  Text('Please fill in all required fields.')),
+                            content:
+                                Text('Please fill in all required fields.'),
+                          ),
                         );
                         return;
                       }
                       if (_locations.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content:
-                                  Text('Please add at least one location.')),
+                            content: Text('Please add at least one location.'),
+                          ),
                         );
                         return;
                       }
@@ -100,9 +107,9 @@ class _AddFoodPageState extends ConsumerState<AddFoodPage> {
                         description: _descriptionController.text,
                         locations: _locations.map((loc) {
                           return Location(
-                            city: loc['city']!,
-                            address: loc['address']!,
-                            url: loc['url']!,
+                            city: loc['city'] ?? '',
+                            address: loc['address'] ?? '',
+                            url: loc['url'] ?? '',
                           );
                         }).toList(),
                         imageUrl: _imageUrlController.text,

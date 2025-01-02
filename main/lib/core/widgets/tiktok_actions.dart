@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/data/models/tiktok.dart';
 import 'package:main/data/providers/tiktok_provider.dart';
 
@@ -72,18 +73,23 @@ class TikTokActions extends ConsumerWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('Delete TikTok'),
-          content: const Text(
-            'Are you sure you want to delete this TikTok video?',
-          ),
+          title: Text('Delete TikTok',
+              style: GoogleFonts.inter(color: Colors.black)),
+          content: Text('Are you sure you want to delete this TikTok video?',
+              style: GoogleFonts.inter(color: Colors.black)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child:
+                  Text('Cancel', style: GoogleFonts.inter(color: Colors.black)),
             ),
             TextButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.red),
+              ),
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Delete'),
+              child:
+                  Text('Delete', style: GoogleFonts.inter(color: Colors.white)),
             ),
           ],
         );

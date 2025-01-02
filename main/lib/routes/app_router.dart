@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:main/features/admin/views/add_food_page.dart';
 import 'package:main/features/admin/views/admin_dashboard_page.dart';
@@ -104,8 +106,13 @@ GoRouter appRouter({
       GoRoute(
         path: '/dashboard',
         name: 'dashboard',
-        builder: (context, state) => const DashboardLayout(
-          child: Center(child: Text('Welcome to Admin Dashboard!')),
+        builder: (context, state) => DashboardLayout(
+          child: Center(
+              child: Text('Welcome to Admin Dashboard!',
+                  style: GoogleFonts.inter(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500))),
         ),
         routes: [
           GoRoute(

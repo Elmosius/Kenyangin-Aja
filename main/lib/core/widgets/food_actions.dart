@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main/data/providers/food_provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -65,18 +66,24 @@ class FoodActionButtons extends ConsumerWidget {
     return showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Food'),
-        content: const Text(
-          'Are you sure you want to delete this food?',
-        ),
+        backgroundColor: Colors.white,
+        title:
+            Text('Delete Food', style: GoogleFonts.inter(color: Colors.black)),
+        content: Text('Are you sure you want to delete this food?',
+            style: GoogleFonts.inter(color: Colors.black)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child:
+                Text('Cancel', style: GoogleFonts.inter(color: Colors.black)),
           ),
           TextButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(Colors.red),
+            ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
+            child:
+                Text('Delete', style: GoogleFonts.inter(color: Colors.white)),
           ),
         ],
       ),
