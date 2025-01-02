@@ -112,6 +112,13 @@ class Sidebar extends ConsumerWidget {
           ),
           const Divider(color: Colors.white70, thickness: 1),
           SidebarItem(
+            icon: Icons.undo,
+            title: 'Back to Home',
+            onTap: () async {
+              context.goNamed('home');
+            },
+          ),
+          SidebarItem(
             icon: Icons.logout,
             title: 'Logout',
             onTap: () async {
