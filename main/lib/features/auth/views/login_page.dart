@@ -59,7 +59,7 @@ class LoginPage extends ConsumerWidget {
               Positioned.fill(
                 top: 150,
                 child: Image.asset(
-                  'images/lingkaran-orange.png',
+                  'assets/images/lingkaran-orange.png',
                   fit: BoxFit.fill,
                 ),
               ),
@@ -78,7 +78,7 @@ class LoginPage extends ConsumerWidget {
                           children: [
                             Positioned(
                               child: Image.asset(
-                                'images/login.png',
+                                'assets/images/login.png',
                                 width: 300,
                                 fit: BoxFit.contain,
                               ),

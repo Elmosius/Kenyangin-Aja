@@ -56,7 +56,7 @@ class RegisterPage extends ConsumerWidget {
           Positioned.fill(
             top: 150,
             child: Image.asset(
-              'images/lingkaran-orange2.png',
+              'assets/images/lingkaran-orange2.png',
               fit: BoxFit.fill,
             ),
           ),
@@ -77,7 +77,7 @@ class RegisterPage extends ConsumerWidget {
                           children: [
                             Positioned(
                               child: Image.asset(
-                                'images/regist.png',
+                                'assets/images/regist.png',
                                 width: 350,
                                 fit: BoxFit.contain,
                               ),
