@@ -16,9 +16,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   final TextEditingController _queryController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String _selectedSource = "TikTok";
-  String? _errorMessage;
   String? _currentQuery;
-  final List<dynamic> _existingResults = [];
 
   @override
   Widget build(BuildContext context) {
@@ -107,25 +105,11 @@ class _SearchPageState extends ConsumerState<SearchPage> {
               ),
               const SizedBox(height: 16),
 
-              // Display Results or Error
-              if (_errorMessage != null)
-                Text(
-                  'Error: $_errorMessage',
-                  style: const TextStyle(color: Colors.red),
-                ),
+              // Search Results
               if (searchResultsAsync != null)
                 Expanded(
                   child: searchResultsAsync.when(
                     data: (results) {
-                      // Filter new results
-                      final newResults = results.where((result) {
-                        return !_existingResults
-                            .any((existing) => existing.id == result.id);
-                      }).toList();
-
-                      // Update existing results
-                      _existingResults.addAll(newResults);
-
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -134,14 +118,6 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          if (newResults.isNotEmpty)
-                            Text(
-                              '${newResults.length} new results added!',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: AppColors.hijauTua),
-                            ),
                           const SizedBox(height: 16),
                           Expanded(
                             child: ListView.builder(

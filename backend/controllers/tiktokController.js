@@ -1,3 +1,4 @@
+import Food from "../models/foodModel.js";
 import TikTok from "../models/tiktokModel.js";
 import { searchVideos } from "../services/tiktokService.js";
 
@@ -41,7 +42,6 @@ const deleteTikTokVideo = async (req, res) => {
 
   try {
     const isReferenced = await Food.exists({ tiktokRef: id });
-
     if (isReferenced) {
       return res.status(500).json({
         message: "Cannot delete TikTok. It is still referenced by Food.",

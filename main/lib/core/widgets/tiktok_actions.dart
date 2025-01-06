@@ -108,7 +108,7 @@ class TikTokActions extends ConsumerWidget {
       final notifier = ref.read(tiktokActionProvider.notifier);
 
       await notifier.deleteTikTok(tiktok.id);
-
+      ref.invalidate(tiktokProvider);
       final state = ref.read(tiktokActionProvider);
 
       if (context.mounted) {

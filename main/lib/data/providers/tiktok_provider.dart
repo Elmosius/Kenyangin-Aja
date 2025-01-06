@@ -22,7 +22,7 @@ final tiktokDetailProvider =
 final tiktokActionProvider =
     StateNotifierProvider<TikTokActionNotifier, AsyncValue<void>>((ref) {
   final tiktokService = ref.read(tiktokServiceProvider);
-  return TikTokActionNotifier(tiktokService);
+  return TikTokActionNotifier(tiktokService, ref);
 });
 
 final refreshTikTokProvider = FutureProvider<List<TikTok>>((ref) async {
@@ -39,8 +39,9 @@ final searchTikTokProvider = FutureProvider.family<List<TikTok>, String>(
 
 class TikTokActionNotifier extends StateNotifier<AsyncValue<void>> {
   final TikTokService _tiktokService;
+  final Ref _ref;
 
-  TikTokActionNotifier(this._tiktokService)
+  TikTokActionNotifier(this._tiktokService, this._ref)
       : super(const AsyncValue.data(null));
 
   Future<void> deleteTikTok(String id) async {
@@ -48,6 +49,8 @@ class TikTokActionNotifier extends StateNotifier<AsyncValue<void>> {
     try {
       await _tiktokService.deleteVideo(id);
       state = const AsyncValue.data(null);
+
+      _ref.invalidate(tiktokProvider);
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }

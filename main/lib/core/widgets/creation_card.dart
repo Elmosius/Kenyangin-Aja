@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -35,6 +37,7 @@ class CreationDateCard extends StatelessWidget {
 
   // Fungsi untuk memformat tanggal
   String _formatDate(String rawDate) {
+    log(rawDate);
     try {
       final date = DateTime.parse(rawDate);
       final formatter = DateFormat('dd-MM-yyyy HH:mm:ss');

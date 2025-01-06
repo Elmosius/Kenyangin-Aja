@@ -36,6 +36,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final authState = ref.watch(authStateNotifierProvider.notifier);
     final userProfile = authState.userProfile;
 
+    log(userProfile.toString());
+
     final userId = userProfile?['id'] ?? '';
     final favoritesAsync = ref.watch(favoriteProvider);
 
@@ -47,8 +49,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final userEmail = userProfile['email'] ?? 'Unknown';
     final accountCreationDate = userProfile['createdAt'] ?? 'Unknown';
     final role = userProfile['role'] ?? 'user';
-
-    log(role);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),

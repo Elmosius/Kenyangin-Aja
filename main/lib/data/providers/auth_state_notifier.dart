@@ -38,7 +38,6 @@ class AuthStateNotifier extends StateNotifier<bool> {
     try {
       final user = await _authService.verifyToken(token);
       _userProfile = user;
-      log('User Profile: $_userProfile');
       state = true;
     } catch (e) {
       await logout();

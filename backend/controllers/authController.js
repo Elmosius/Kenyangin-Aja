@@ -34,6 +34,7 @@ const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: role.name,
+        createdAt: user.createdAt,
       },
     });
   } catch (e) {
@@ -80,6 +81,7 @@ const registerUser = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         role: role.name,
+        createdAt: user.createdAt,
       },
       token,
     });
@@ -107,6 +109,7 @@ const verifyToken = async (req, res) => {
         name: user.name,
         email: user.email,
         role: role.name,
+        createdAt: user.createdAt,
       },
     });
   } catch (error) {
