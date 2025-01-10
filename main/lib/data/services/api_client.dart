@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 
 class ApiClient {
@@ -9,6 +8,7 @@ class ApiClient {
       : _dio = Dio(
           BaseOptions(
             // baseUrl: 'http://172.16.173.84:5000',
+            // baseUrl: 'http://192.168.181.169:5000',
             baseUrl: 'http://192.168.0.4:5000',
             connectTimeout: const Duration(milliseconds: 5000),
             receiveTimeout: const Duration(milliseconds: 5000),

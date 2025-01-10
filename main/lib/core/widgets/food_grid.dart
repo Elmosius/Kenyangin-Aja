@@ -28,7 +28,7 @@ class FoodGridWidget extends StatelessWidget {
       return Center(
         child: EmptyStateWidget(
           message: emptyMessage,
-          imagePath: 'images/status_empty.png',
+          imagePath: 'assets/images/status_empty.png',
         ),
       );
     }

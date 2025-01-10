@@ -25,7 +25,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         suffixIcon: IconButton(
           icon: const Icon(Icons.filter_list),
           onPressed: () {
-            // Logika filter tambahan (jika ada)
+            // Logika filter tambahan 
           },
         ),
         hintText: "Cari nama restoran...",

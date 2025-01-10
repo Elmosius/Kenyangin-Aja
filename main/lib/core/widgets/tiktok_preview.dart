@@ -37,13 +37,17 @@ class TikTokPreview extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _statItem(Icons.thumb_up, tiktok.likeCount, 'Likes'),
+                  _statItem(
+                      Icons.thumb_up, formatNumber(tiktok.likeCount), 'Likes'),
                   const SizedBox(width: 20),
-                  _statItem(Icons.comment, tiktok.commentCount, 'Comments'),
+                  _statItem(Icons.comment, formatNumber(tiktok.commentCount),
+                      'Comments'),
                   const SizedBox(width: 20),
-                  _statItem(Icons.share, tiktok.shareCount, 'Shares'),
+                  _statItem(
+                      Icons.share, formatNumber(tiktok.shareCount), 'Shares'),
                   const SizedBox(width: 20),
-                  _statItem(Icons.play_arrow, tiktok.playCount, 'Plays'),
+                  _statItem(Icons.play_arrow, formatNumber(tiktok.playCount),
+                      'Plays'),
                 ],
               ),
               const SizedBox(height: 16),
@@ -85,13 +89,13 @@ class TikTokPreview extends ConsumerWidget {
     );
   }
 
-  Widget _statItem(IconData icon, int value, String label) {
+  Widget _statItem(IconData icon, String value, String label) {
     return Column(
       children: [
         Icon(icon, size: 14, color: AppColors.hijauTua),
         const SizedBox(height: 5),
         Text(
-          '$value',
+          value,
           style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 12),
         ),
         const SizedBox(height: 5),
@@ -101,5 +105,15 @@ class TikTokPreview extends ConsumerWidget {
         ),
       ],
     );
+  }
+}
+
+String formatNumber(int number) {
+  if (number >= 1000000) {
+    return '${(number / 1000000).toStringAsFixed(1)}M';
+  } else if (number >= 1000) {
+    return '${(number / 1000).toStringAsFixed(1)}K';
+  } else {
+    return number.toString();
   }
 }

@@ -8,7 +8,6 @@ import 'package:main/features/user/layouts/viral_place_list.dart';
 import 'package:main/data/providers/food_provider.dart';
 import 'package:main/data/providers/city_provider.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -73,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                       const EmptyStateWidget(
                         message:
                             "Maaf, saat ini belum ada tempat yang cocok dengan pencarian Anda.",
-                        imagePath: 'images/status_empty.png',
+                        imagePath: 'assets/images/status_empty.png',
                       )
                     else ...[
                       if (topRatingFoods.isNotEmpty) ...[

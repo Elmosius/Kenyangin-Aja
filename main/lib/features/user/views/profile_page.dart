@@ -95,6 +95,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     textColor: Colors.black,
                     fontSize: 12,
                   ),
+                if (role != 'admin')
+                  CustomButton(
+                    text: 'Logout',
+                    onPressed: () async {
+                      await authState.logout();
+                      if (!context.mounted) return;
+                      context.goNamed('login');
+                    },
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    fontSize: 12,
+                  ),
                 // Delete Account Button
                 DeleteButton(
                   onConfirmed: () {

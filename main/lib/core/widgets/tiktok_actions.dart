@@ -47,10 +47,10 @@ class TikTokActions extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Text('Description: ${tiktok.description}'),
                 const SizedBox(height: 8),
-                Text('Likes: ${tiktok.likeCount}'),
-                Text('Comments: ${tiktok.commentCount}'),
-                Text('Shares: ${tiktok.shareCount}'),
-                Text('Plays: ${tiktok.playCount}'),
+                Text('Likes: ${formatNumber(tiktok.likeCount)}'),
+                Text('Comments: ${formatNumber(tiktok.commentCount)}'),
+                Text('Shares: ${formatNumber(tiktok.shareCount)}'),
+                Text('Plays: ${formatNumber(tiktok.playCount)}'),
                 const SizedBox(height: 16),
                 Align(
                   alignment: Alignment.topRight,
@@ -123,5 +123,15 @@ class TikTokActions extends ConsumerWidget {
         }
       }
     }
+  }
+}
+
+String formatNumber(int number) {
+  if (number >= 1000000) {
+    return '${(number / 1000000).toStringAsFixed(1)}M';
+  } else if (number >= 1000) {
+    return '${(number / 1000).toStringAsFixed(1)}K';
+  } else {
+    return number.toString();
   }
 }
