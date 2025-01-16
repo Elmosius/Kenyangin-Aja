@@ -16,4 +16,7 @@ Membuat aplikasi menjadi one-stop hub untuk menemukan makanan yang sedang viral,
 - Coming Soon
 
 ## ⚠️ Instalasi
-- Coming Soon
+1. Clone repository:
+```
+git clone https://github.com/Elmosius/Kenyangin-Aja.git
+```
