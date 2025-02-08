@@ -18,7 +18,10 @@ Membuat aplikasi menjadi one-stop hub untuk menemukan makanan yang sedang viral,
 
 ## ⚙️ Teknologi yang dipakai
 - Flutter
-- NodeJS
+- Express Js
+- Axios
+- Tikapi
+- MongoDB
   
 ## 💻 Demo
 - Coming Soon
