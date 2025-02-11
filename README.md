@@ -79,7 +79,7 @@ Membuat aplikasi menjadi one-stop hub untuk menemukan makanan yang sedang viral,
 
 1.  Masuk ke direktori frontend:
     ```
-    cd ../frontend
+    cd frontend
     ```
 
 2.  Instal dependencies:
